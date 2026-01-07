@@ -1,0 +1,664 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Inderpreet Singh Bhangu — Portfolio</title>
+    <meta name="description"
+        content="Portfolio of Inderpreet Singh Bhangu — Android & iOS Developer, AOSP, OTA systems." />
+
+    <!-- Roboto (Material default) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+
+    <style>
+        html,
+        body {
+            margin: 0;
+            height: 100%;
+            font-family: Roboto, system-ui, -apple-system, Segoe UI, Arial, sans-serif;
+        }
+
+        #root {
+            min-height: 100%;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+
+    <!-- React -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+
+    <!-- Emotion (required by MUI) -->
+    <script src="https://unpkg.com/@emotion/react@11/dist/emotion-react.umd.min.js"></script>
+    <script src="https://unpkg.com/@emotion/styled@11/dist/emotion-styled.umd.min.js"></script>
+
+    <!-- Material UI -->
+    <script src="https://unpkg.com/@mui/material@5/umd/material-ui.production.min.js"></script>
+
+    <link rel="icon" href="data:," />
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <script>
+        const React = window.React;
+        const ReactDOM = window.ReactDOM;
+
+        const {
+            ThemeProvider,
+            createTheme,
+            CssBaseline,
+            AppBar,
+            Toolbar,
+            Typography,
+            Container,
+            Box,
+            Stack,
+            Button,
+            IconButton,
+            Grid,
+            Card,
+            CardContent,
+            Chip,
+            Divider,
+            Paper,
+            Link,
+        } = window.MaterialUI;
+
+        const PROFILE = {
+            name: "Inderpreet Singh Bhangu",
+            role: "Mobile Developer (Android & iOS)",
+            location: "India",
+            email: "inderpreetbhangu2@gmail.com",
+            github: "https://github.com/IPSBHANGU",
+            summary1: "I build, on mobile and on the system side.",
+        };
+
+        const LATEST = {
+            company: "Grata Technologies",
+            bullets: [
+                "Mobile app features & UI improvements",
+                "Stability fixes and release support",
+                "Collaboration with QA/design for polish",
+            ],
+        };
+
+        const PROJECTS = [
+            {
+                title: "Android OTA Update System",
+                description:
+                    "OTA updater app + backend to deliver builds by device ID for reliable update targeting and version management.",
+                tags: ["Android", "Kotlin", "OTA", "Backend"],
+                links: { repo: "" },
+            },
+            {
+                title: "Go Backend for Android OTA Project",
+                description:
+                    "Go service for OTA metadata delivery, device targeting, and update distribution APIs.",
+                tags: ["Go", "APIs", "OTA", "Backend"],
+                links: { repo: "" },
+            },
+            {
+                title: "AOSP Custom ROM Development",
+                description:
+                    "Device bring-up work: device trees, HAL integration, kernel-related work, and platform debugging.",
+                tags: ["AOSP", "C/C++", "Linux", "HAL", "Kernel"],
+                links: { repo: "" },
+            },
+            {
+                title: "AR Live Filter App (iOS)",
+                description:
+                    "AR-based live filter app with real-time face feature tracking and rendering.",
+                tags: ["iOS", "SwiftUI", "AR"],
+                links: { repo: "" },
+            },
+            {
+                title: "Sketching App (iOS)",
+                description:
+                    "Custom drawing tools and recording of the drawing canvas area only.",
+                tags: ["iOS", "SwiftUI", "Drawing"],
+                links: { repo: "" },
+            },
+            {
+                title: "Real-time Chat Application",
+                description:
+                    "Realtime chat with groups, media sharing, and user search.",
+                tags: ["Firebase", "Realtime DB", "Chat"],
+                links: { repo: "" },
+            },
+        ];
+
+        const SKILL_GROUPS = [
+            {
+                title: "Mobile",
+                bullets: ["Android (Kotlin, Jetpack Compose)", "iOS (Swift, SwiftUI)"],
+                chips: ["Compose", "SwiftUI", "MVVM", "Performance", "Debugging"],
+            },
+            {
+                title: "Systems / AOSP",
+                bullets: ["AOSP / ROM work", "C/C++ • Shell • Git • Linux basics"],
+                chips: ["HAL", "Device Trees", "Kernel", "Bring-up"],
+            },
+            {
+                title: "Backend / Frontend",
+                bullets: ["Go backend for APIs", "Node.js + React knowledge"],
+                chips: ["Go", "Node", "React", "REST APIs"],
+            },
+        ];
+
+        function useSystemColorScheme() {
+            const get = () =>
+                window.matchMedia &&
+                    window.matchMedia("(prefers-color-scheme: dark)").matches
+                    ? "dark"
+                    : "light";
+
+            const [mode, setMode] = React.useState(get);
+
+            React.useEffect(() => {
+                const mq = window.matchMedia("(prefers-color-scheme: dark)");
+                const handler = () => setMode(get());
+                if (mq && mq.addEventListener) mq.addEventListener("change", handler);
+                else if (mq && mq.addListener) mq.addListener(handler);
+                return () => {
+                    if (mq && mq.removeEventListener) mq.removeEventListener("change", handler);
+                    else if (mq && mq.removeListener) mq.removeListener(handler);
+                };
+            }, []);
+
+            return mode;
+        }
+
+        function NavLink({ href, label }) {
+            return React.createElement(
+                Button,
+                {
+                    href,
+                    color: "inherit",
+                    size: "small",
+                    sx: {
+                        textTransform: "none",
+                        fontWeight: 600,
+                        opacity: 0.85,
+                        "&:hover": { opacity: 1 },
+                    },
+                },
+                label
+            );
+        }
+
+        function Section({ id, title, subtitle, children }) {
+            return React.createElement(
+                Box,
+                { id, sx: { mt: { xs: 5, md: 7 } } },
+                React.createElement(
+                    Stack,
+                    { spacing: 0.5, sx: { mb: 2.5 } },
+                    React.createElement(Typography, { variant: "h5", fontWeight: 900 }, title),
+                    subtitle
+                        ? React.createElement(
+                            Typography,
+                            { variant: "body2", color: "text.secondary" },
+                            subtitle
+                        )
+                        : null
+                ),
+                children
+            );
+        }
+
+        function ProjectCard({ p }) {
+            return React.createElement(
+                Card,
+                { variant: "outlined", sx: { height: "100%" } },
+                React.createElement(
+                    CardContent,
+                    null,
+                    React.createElement(Typography, { variant: "h6", fontWeight: 850 }, p.title),
+                    React.createElement(
+                        Typography,
+                        { variant: "body2", color: "text.secondary", sx: { mt: 1 } },
+                        p.description
+                    ),
+                    React.createElement(
+                        Stack,
+                        { direction: "row", spacing: 1, useFlexGap: true, flexWrap: "wrap", sx: { mt: 2 } },
+                        p.tags.map((t) =>
+                            React.createElement(Chip, { key: t, label: t, size: "small", variant: "outlined" })
+                        )
+                    ),
+                    p.links && p.links.repo
+                        ? React.createElement(
+                            Box,
+                            { sx: { mt: 2 } },
+                            React.createElement(
+                                Link,
+                                { href: p.links.repo, target: "_blank", rel: "noreferrer", underline: "hover" },
+                                "View repository →"
+                            )
+                        )
+                        : null
+                )
+            );
+        }
+
+        function App() {
+            const mode = useSystemColorScheme();
+
+            const [pastHeroName, setPastHeroName] = React.useState(false);
+
+            React.useEffect(() => {
+                const el = document.getElementById("hero-name");
+                if (!el || !("IntersectionObserver" in window)) return;
+
+                const io = new IntersectionObserver(
+                    ([entry]) => {
+                        setPastHeroName(!entry.isIntersecting);
+                    },
+                    { threshold: 0 }
+                );
+
+                io.observe(el);
+                return () => io.disconnect();
+            }, []);
+
+            const theme = React.useMemo(() => {
+                return createTheme({
+                    palette: {
+                        mode,
+                        primary: { main: mode === "dark" ? "#90caf9" : "#1976d2" },
+                    },
+                    shape: { borderRadius: 14 },
+                    typography: {
+                        fontFamily: "Roboto, system-ui, -apple-system, Segoe UI, Arial, sans-serif",
+                    },
+                });
+            }, [mode]);
+
+            return React.createElement(
+                ThemeProvider,
+                { theme },
+                React.createElement(CssBaseline, null),
+
+                React.createElement(
+                    AppBar,
+                    {
+                        position: "sticky",
+                        color: "default",
+                        elevation: 0,
+                        sx: { borderBottom: 1, borderColor: "divider" },
+                    },
+                    React.createElement(
+                        Toolbar,
+                        { sx: { gap: 2, justifyContent: "space-between" } },
+
+                        pastHeroName
+                            ? React.createElement(
+                                Stack,
+                                { spacing: 0, sx: { minWidth: 0 } },
+                                React.createElement(
+                                    Typography,
+                                    { variant: "subtitle1", fontWeight: 950, noWrap: true },
+                                    PROFILE.name
+                                ),
+                                React.createElement(
+                                    Typography,
+                                    { variant: "caption", color: "text.secondary", noWrap: true },
+                                    PROFILE.role
+                                )
+                            )
+                            : React.createElement(Box, { sx: { width: 1 } }),
+
+                        React.createElement(
+                            Stack,
+                            {
+                                direction: "row",
+                                spacing: 0.5,
+                                alignItems: "center",
+                                sx: {
+                                    opacity: pastHeroName ? 0 : 1,
+                                    transform: pastHeroName ? "translateY(-4px)" : "translateY(0)",
+                                    transition: "opacity 160ms ease, transform 160ms ease",
+                                    pointerEvents: pastHeroName ? "none" : "auto",
+                                },
+                            },
+                            React.createElement(NavLink, { href: "#home", label: "Home" }),
+                            React.createElement(NavLink, { href: "#about", label: "About" }),
+                            React.createElement(NavLink, { href: "#skills", label: "Skills" }),
+                            React.createElement(NavLink, { href: "#projects", label: "Portfolio" }),
+                            React.createElement(NavLink, { href: "#contact", label: "Contact" })
+                        )
+                    )
+                ),
+
+                React.createElement(
+                    Container,
+                    { maxWidth: "lg", sx: { py: { xs: 3, md: 5 } } },
+
+                    React.createElement(
+                        Box,
+                        { id: "home" },
+                        React.createElement(
+                            Paper,
+                            {
+                                variant: "outlined",
+                                sx: {
+                                    p: { xs: 2.5, md: 4 },
+                                    borderRadius: 4,
+                                    background:
+                                        mode === "dark"
+                                            ? "linear-gradient(135deg, rgba(144,202,249,0.10), rgba(25,118,210,0.02))"
+                                            : "linear-gradient(135deg, rgba(25,118,210,0.08), rgba(144,202,249,0.02))",
+                                },
+                            },
+                            React.createElement(
+                                Grid,
+                                { container: true, spacing: 3, alignItems: "center" },
+                                React.createElement(
+                                    Grid,
+                                    { item: true, xs: 12, md: 8 },
+                                    React.createElement(
+                                        Typography,
+                                        { variant: "overline", color: "text.secondary" },
+                                        "Hi, my name is"
+                                    ),
+                                    React.createElement(
+                                        Typography,
+                                        {
+                                            id: "hero-name",
+                                            variant: "h3",
+                                            fontWeight: 950,
+                                            sx: { letterSpacing: -0.6 },
+                                        },
+                                        PROFILE.name
+                                    ),
+                                    React.createElement(
+                                        Typography,
+                                        { variant: "h6", color: "text.secondary", sx: { mt: 1 } },
+                                        PROFILE.summary1
+                                    ),
+                                    React.createElement(
+                                        Typography,
+                                        { variant: "body1", color: "text.secondary", sx: { mt: 1 } },
+                                        PROFILE.summary2
+                                    ),
+
+                                    React.createElement(
+                                        Stack,
+                                        { direction: "row", spacing: 1.2, useFlexGap: true, flexWrap: "wrap", sx: { mt: 2.5 } },
+                                        React.createElement(Button, { variant: "contained", href: PROFILE.github, target: "_blank", rel: "noreferrer" }, "GitHub"),
+                                        React.createElement(Button, { variant: "outlined", href: "mailto:" + PROFILE.email }, "Email"),
+                                        React.createElement(Button, { variant: "text", href: "#projects" }, "See portfolio →")
+                                    )
+                                ),
+                                React.createElement(
+                                    Grid,
+                                    { item: true, xs: 12, md: 4 },
+                                    React.createElement(
+                                        Paper,
+                                        { variant: "outlined", sx: { p: 2.5, borderRadius: 3 } },
+                                        React.createElement(Typography, { variant: "subtitle2", color: "text.secondary" }, "Quick Info"),
+                                        React.createElement(Divider, { sx: { my: 1.5 } }),
+                                        React.createElement(Typography, { variant: "body2" }, "📍 " + PROFILE.location),
+                                        React.createElement(
+                                            Typography,
+                                            { variant: "body2", sx: { mt: 1 } },
+                                            "✉️ ",
+                                            React.createElement(Link, { href: "mailto:" + PROFILE.email, underline: "hover" }, PROFILE.email)
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    ),
+
+                    // ABOUT
+                    React.createElement(
+                        Section,
+                        { id: "about", title: "About Me" },
+                        React.createElement(
+                            Paper,
+                            { variant: "outlined", sx: { p: { xs: 2.5, md: 3 }, borderRadius: 3 } },
+                            React.createElement(
+                                Grid,
+                                {
+                                    container: true,
+                                    spacing: 3,
+                                    alignItems: "stretch",
+                                },
+
+                                // GitHub profile image
+                                React.createElement(
+                                    Grid,
+                                    { item: true, xs: 12, md: 4 },
+                                    React.createElement(
+                                        Box,
+                                        {
+                                            sx: {
+                                                height: "100%",
+                                                borderRadius: 2,
+                                                overflow: "hidden",
+                                            },
+                                        },
+                                        React.createElement("img", {
+                                            src: "https://raw.githubusercontent.com/IPSBHANGU/ipsbhangu.github.io/main/assets/profile.jpg",
+                                            alt: "Inderpreet Singh Bhangu",
+                                            style: {
+                                                width: "100%",
+                                                height: "100%",
+                                                objectFit: "cover",
+                                                display: "block",
+                                            },
+                                        })
+                                    )
+                                ),
+
+                                // About text
+                                React.createElement(
+                                    Grid,
+                                    { item: true, xs: 12, md: 8 },
+                                    React.createElement(
+                                        Stack,
+                                        { spacing: 1.6 },
+                                        React.createElement(
+                                            Typography,
+                                            { variant: "body1", color: "text.secondary", sx: { lineHeight: 1.85 } },
+                                            "I’m Inderpreet Singh Bhangu, a software engineer with a strong focus on iOS development and low-level Android system engineering. I graduated with a Bachelor’s degree in Computer Science & Engineering from Punjab Technical University in 2024, and I’ve been actively building production-ready software and open-source systems since my early college years."
+                                        ),
+                                        React.createElement(
+                                            Typography,
+                                            { variant: "body1", color: "text.secondary", sx: { lineHeight: 1.85 } },
+                                            "Currently, I work as an Frontend Developer at CoreAI Technologies, where I design and build feature-rich applications using SwiftUI, UIKit, Kotlin, Compose. My work includes working Grata Technologies White-Lable Projects like Arlington, Chard, Frontrow, Ironclad. I also Work on React Frontend Projects"
+                                        ),
+                                        React.createElement(
+                                            Typography,
+                                            { variant: "body1", color: "text.secondary", sx: { lineHeight: 1.85 } },
+                                            "I worked as an Developer at StackGeeks, where I design and build feature-rich applications using SwiftUI, Objective-C, and Firebase. My work includes developing AR-based live filter apps using Apple VisionKit, real-time chat systems, creative sketching tools, and internal HR management platforms that significantly improve operational efficiency."
+                                        ),
+                                        React.createElement(
+                                            Typography,
+                                            { variant: "body1", color: "text.secondary", sx: { lineHeight: 1.85 } },
+                                            "Alongside application development, I have deep experience in Android Open Source Project (AOSP) development. Since 2017, I’ve been contributing to and maintaining custom Android ROMs, working directly with Linux kernels, device trees, HALs, and Qualcomm platforms."
+                                        ),
+                                        React.createElement(
+                                            Typography,
+                                            { variant: "body1", color: "text.secondary", sx: { lineHeight: 1.85 } },
+                                            "I also enjoy building end-to-end systems, from Android OTA pipelines to backend services, owning problems from design to deployment."
+                                        ),
+                                        React.createElement(
+                                            Typography,
+                                            { variant: "body1", color: "text.secondary", sx: { lineHeight: 1.85 } },
+                                            "I’m driven by learning, problem-solving, and building software that is both technically solid and user-focused."
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    ),
+
+
+                    // SKILLS
+                    React.createElement(
+                        Section,
+                        { id: "skills", title: "Skills", subtitle: "Tools and technologies I use regularly." },
+                        React.createElement(
+                            Grid,
+                            { container: true, spacing: 2.2 },
+                            SKILL_GROUPS.map((g) =>
+                                React.createElement(
+                                    Grid,
+                                    { item: true, xs: 12, md: 4, key: g.title },
+                                    React.createElement(
+                                        Card,
+                                        { variant: "outlined", sx: { height: "100%" } },
+                                        React.createElement(
+                                            CardContent,
+                                            null,
+                                            React.createElement(Typography, { variant: "h6", fontWeight: 900 }, g.title),
+                                            React.createElement(Divider, { sx: { my: 1.5 } }),
+                                            React.createElement(
+                                                Stack,
+                                                { spacing: 0.7 },
+                                                g.bullets.map((b) =>
+                                                    React.createElement(
+                                                        Typography,
+                                                        { key: b, variant: "body2", color: "text.secondary" },
+                                                        "• " + b
+                                                    )
+                                                )
+                                            ),
+                                            React.createElement(
+                                                Stack,
+                                                { direction: "row", spacing: 1, useFlexGap: true, flexWrap: "wrap", sx: { mt: 2 } },
+                                                g.chips.map((c) =>
+                                                    React.createElement(Chip, { key: c, label: c, size: "small", variant: "outlined" })
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    ),
+
+                    // PROJECTS
+                    React.createElement(
+                        Section,
+                        { id: "projects", title: "Portfolio", subtitle: "Selected work and technical projects." },
+                        React.createElement(
+                            Paper,
+                            {
+                                variant: "outlined",
+                                sx: { p: { xs: 2, md: 2.5 }, mb: 2.5, borderRadius: 3 }
+                            },
+                            React.createElement(
+                                Typography,
+                                { variant: "subtitle1", fontWeight: 900 },
+                                "Latest: ",
+                                LATEST.company
+                            ),
+                            React.createElement(
+                                Stack,
+                                { spacing: 0.6, sx: { mt: 1 } },
+                                LATEST.bullets.map((b) =>
+                                    React.createElement(
+                                        Typography,
+                                        { key: b, variant: "body2", color: "text.secondary" },
+                                        "• " + b
+                                    )
+                                )
+                            )
+                        ),
+
+                        React.createElement(
+                            Grid,
+                            { container: true, spacing: 2.2 },
+                            PROJECTS.map((p) =>
+                                React.createElement(
+                                    Grid,
+                                    { item: true, xs: 12, md: 6, key: p.title },
+                                    React.createElement(ProjectCard, { p })
+                                )
+                            )
+                        ),
+                        React.createElement(
+                            Box,
+                            { sx: { mt: 2.5 } },
+                            React.createElement(
+                                Typography,
+                                { variant: "body2", color: "text.secondary" },
+                                "More on ",
+                                React.createElement(Link, { href: PROFILE.github, target: "_blank", rel: "noreferrer", underline: "hover" }, "GitHub"),
+                                "."
+                            )
+                        )
+                    ),
+
+                    // CONTACT
+                    React.createElement(
+                        Section,
+                        { id: "contact", title: "Contact", subtitle: "Reach out for opportunities or collaboration." },
+                        React.createElement(
+                            Paper,
+                            { variant: "outlined", sx: { p: { xs: 2.5, md: 3 }, borderRadius: 3 } },
+                            React.createElement(
+                                Stack,
+                                { direction: { xs: "column", sm: "row" }, spacing: 1.2, alignItems: { sm: "center" }, justifyContent: "space-between" },
+                                React.createElement(
+                                    Stack,
+                                    { spacing: 0.3 },
+                                    React.createElement(Typography, { variant: "subtitle1", fontWeight: 950 }, "Email"),
+                                    React.createElement(Link, { href: "mailto:" + PROFILE.email, underline: "hover" }, PROFILE.email)
+                                ),
+                                React.createElement(
+                                    Stack,
+                                    { direction: "row", spacing: 1.2, flexWrap: "wrap" },
+                                    React.createElement(Button, { variant: "contained", href: "mailto:" + PROFILE.email }, "Email"),
+                                    React.createElement(Button, { variant: "outlined", href: PROFILE.github, target: "_blank", rel: "noreferrer" }, "GitHub")
+                                )
+                            )
+                        )
+                    ),
+
+                    // FOOTER
+                    React.createElement(
+                        Box,
+                        {
+                            sx: {
+                                mt: 6,
+                                pt: 2.5,
+                                borderTop: 1,
+                                borderColor: "divider",
+                                color: "text.secondary",
+                            },
+                        },
+                        React.createElement(
+                            Stack,
+                            {
+                                alignItems: "center",
+                                justifyContent: "center",
+                            },
+                            React.createElement(
+                                Typography,
+                                { variant: "caption", textAlign: "center" },
+                                `© ${new Date().getFullYear()} ${PROFILE.name}`
+                            )
+                        )
+                    )
+
+                )
+            );
+        }
+
+        ReactDOM.createRoot(document.getElementById("root")).render(React.createElement(App));
+    </script>
+</body>
+
+</html>
