@@ -1,40 +1,49 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Inderpreet Singh Bhangu — Portfolio</title>
-  <meta name="description" content="Portfolio of Inderpreet Singh Bhangu — Android & iOS Developer, AOSP, OTA systems." />
+  <meta name="description"
+    content="Portfolio of Inderpreet Singh Bhangu — Android & iOS Developer, AOSP, OTA systems." />
 
   <!-- Roboto -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap"
-    rel="stylesheet"
-  />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
 
   <style>
     :root {
       color-scheme: light dark;
 
+      /* Base */
       --bg: #0b0f17;
       --text: #eaf0ff;
       --muted: rgba(234, 240, 255, 0.72);
 
+      /* Surfaces */
       --panel: rgba(255, 255, 255, 0.04);
       --panel2: rgba(255, 255, 255, 0.035);
       --panelHover: rgba(255, 255, 255, 0.06);
 
+      /* Borders */
       --border: rgba(168, 28, 61, 0.22);
       --borderHover: rgba(168, 28, 61, 0.38);
 
+      /* Wine glows */
       --g1: rgba(136, 19, 55, 0.26);
       --g2: rgba(179, 18, 23, 0.22);
       --g3: rgba(88, 12, 30, 0.28);
 
+      /* Spotlight */
       --spot: rgba(168, 28, 61, 0.14);
       --spotBlend: screen;
+
+      /* Typewriter (SVG stroke) */
+      --twStroke: rgba(234, 240, 255, 0.38);
+      --twAccent: rgba(168, 28, 61, 0.62);
+      --twOpacity: 0.32;
     }
 
     @media (prefers-color-scheme: light) {
@@ -56,6 +65,10 @@
 
         --spot: rgba(138, 21, 56, 0.10);
         --spotBlend: multiply;
+
+        --twStroke: rgba(27, 27, 31, 0.20);
+        --twAccent: rgba(138, 21, 56, 0.40);
+        --twOpacity: 0.45;
       }
     }
 
@@ -65,18 +78,21 @@
       height: 100%;
       font-family: Roboto, system-ui, -apple-system, Segoe UI, Arial, sans-serif;
       background: var(--bg);
+      color: var(--text);
     }
 
     #root {
       min-height: 100%;
       position: relative;
       isolation: isolate;
+      z-index: 0;
     }
 
     html {
       scroll-behavior: smooth;
     }
 
+    /* ====== Background ====== */
     @keyframes bgPan {
       0% { background-position: 0% 0%, 100% 0%, 50% 100%; }
       50% { background-position: 30% 10%, 70% 20%, 45% 90%; }
@@ -94,7 +110,7 @@
     .bg {
       position: fixed;
       inset: 0;
-      z-index: -2;
+      z-index: -4;
       pointer-events: none;
       background-image:
         radial-gradient(1200px 700px at 12% 12%, var(--g1), transparent 60%),
@@ -108,13 +124,11 @@
     .spotlight {
       position: fixed;
       inset: 0;
-      z-index: -1;
+      z-index: -3;
       pointer-events: none;
-      background: radial-gradient(
-        600px 600px at var(--mx, 50%) var(--my, 20%),
-        var(--spot),
-        transparent 55%
-      );
+      background: radial-gradient(600px 600px at var(--mx, 50%) var(--my, 20%),
+          var(--spot),
+          transparent 55%);
       mix-blend-mode: var(--spotBlend);
       opacity: 0.9;
     }
@@ -131,6 +145,7 @@
       mix-blend-mode: overlay;
     }
 
+    /* Scroll reveal */
     .reveal {
       opacity: 0;
       transform: translateY(10px);
@@ -143,19 +158,123 @@
       transform: translateY(0);
     }
 
+    /* ====== Typewriter outline background (SVG) ====== */
+    .techwriter {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      pointer-events: none;
+      opacity: var(--twOpacity);
+    }
+
+    /* Bigger overall (you asked bigger) */
+    .techwriter svg {
+      position: absolute;
+      width: min(980px, 96vw);
+      height: min(440px, 52vh);
+      display: block;
+      will-change: transform, left, top, opacity;
+    }
+
+    .twTextBase {
+      fill: none;
+      stroke: var(--twStroke);
+      stroke-width: 2.8px;
+      stroke-linejoin: round;
+      stroke-linecap: round;
+    }
+
+    .twTextAccent {
+      fill: none;
+      stroke: var(--twAccent);
+      stroke-width: 2.8px;
+      stroke-linejoin: round;
+      stroke-linecap: round;
+      opacity: 0.55;
+      filter: drop-shadow(0 0 10px rgba(168, 28, 61, 0.22));
+    }
+
+    .run.twTextBase,
+    .run.twTextAccent {
+      animation:
+        twDraw 1.35s steps(34, end) forwards,
+        twHoldFade 3.25s ease forwards;
+    }
+
+    @keyframes twDraw {
+      from { stroke-dashoffset: var(--dash, 1400); }
+      to { stroke-dashoffset: 0; }
+    }
+
+    @keyframes twHoldFade {
+      0% { opacity: 1; }
+      62% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+
+    /* ===== Project screenshot styles ===== */
+    .projectShot {
+      width: 100%;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: linear-gradient(to bottom,
+          rgba(0, 0, 0, 0.18),
+          rgba(0, 0, 0, 0.05));
+      display: grid;
+      place-items: center;
+    }
+
+    @media (prefers-color-scheme: light) {
+      .projectShot {
+        border: 1px solid rgba(138, 21, 56, 0.14);
+        background: linear-gradient(to bottom,
+            rgba(138, 21, 56, 0.06),
+            rgba(138, 21, 56, 0.02));
+      }
+    }
+
+    .projectShot img {
+      max-width: 100%;
+      max-height: 360px;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      display: block;
+      padding: 12px;
+      opacity: 0.96;
+    }
+
+    /* Side-by-side (parallel) shot */
+    .projectShot--side {
+      margin-top: 0;            /* no top margin in side layout */
+      height: 100%;
+      min-height: 260px;
+    }
+
+    .projectShot--side img {
+      max-height: 320px;        /* slightly smaller in side layout */
+      padding: 10px;
+    }
+
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
       .bg, .grain { animation: none !important; }
       .reveal { transition: none; opacity: 1; transform: none; }
+      .techwriter { opacity: 0.18; }
+      .run.twTextBase, .run.twTextAccent { animation: none !important; opacity: 1; }
     }
   </style>
 
+  <!-- React -->
   <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
 
+  <!-- Emotion (MUI) -->
   <script src="https://unpkg.com/@emotion/react@11/dist/emotion-react.umd.min.js"></script>
   <script src="https://unpkg.com/@emotion/styled@11/dist/emotion-styled.umd.min.js"></script>
 
+  <!-- MUI -->
   <script src="https://unpkg.com/@mui/material@5/umd/material-ui.production.min.js"></script>
 
   <link rel="icon" href="data:," />
@@ -164,8 +283,11 @@
 <body>
   <div class="bg"></div>
   <div class="spotlight" id="spotlight"></div>
-  <div class="grain"></div>
 
+  <!-- moving typewriter bg -->
+  <div class="techwriter" id="techwriter"></div>
+
+  <div class="grain"></div>
   <div id="root"></div>
 
   <script>
@@ -220,13 +342,15 @@
           "OTA updater app + backend to deliver builds by device ID for reliable update targeting and version management.",
         tags: ["Android", "Kotlin", "OTA", "Backend"],
         links: { repo: "" },
+        screenshot: "assets/ota.png",
       },
       {
-        title: "Go Backend for Android OTA Project",
+        title: "Frontend and Go Backend for Android OTA Project Management",
         description:
-          "Go service for OTA metadata delivery, device targeting, and update distribution APIs.",
+          "Frontend and Go service for OTA metadata delivery, device targeting, and update distribution APIs.",
         tags: ["Go", "APIs", "OTA", "Backend"],
         links: { repo: "" },
+        screenshot: "assets/ota-web.png",
       },
       {
         title: "AOSP Custom ROM Development",
@@ -234,6 +358,7 @@
           "Device bring-up work: device trees, HAL integration, kernel-related work, and platform debugging.",
         tags: ["AOSP", "C/C++", "Linux", "HAL", "Kernel"],
         links: { repo: "" },
+        screenshot: "assets/aosp.png",
       },
       {
         title: "AR Live Filter App (iOS)",
@@ -241,6 +366,7 @@
           "AR-based live filter app with real-time face feature tracking and rendering.",
         tags: ["iOS", "SwiftUI", "AR"],
         links: { repo: "" },
+        screenshot: "",
       },
       {
         title: "Sketching App (iOS)",
@@ -248,13 +374,15 @@
           "Custom drawing tools and recording of the drawing canvas area only.",
         tags: ["iOS", "SwiftUI", "Drawing"],
         links: { repo: "" },
+        screenshot: "",
       },
       {
-        title: "Real-time Chat Application",
+        title: "Real-time Chat App (iOS)",
         description:
           "Realtime chat with groups, media sharing, and user search.",
-        tags: ["Firebase", "Realtime DB", "Chat"],
+        tags: ["iOS", "UIKit", "Firebase", "Realtime DB", "Chat"],
         links: { repo: "" },
+        screenshot: "",
       },
     ];
 
@@ -276,6 +404,7 @@
       },
     ];
 
+    /* Scroll reveal */
     function useScrollReveal() {
       React.useEffect(() => {
         if (!("IntersectionObserver" in window)) return;
@@ -293,13 +422,12 @@
       }, []);
     }
 
+    /* Spotlight follows mouse */
     (function attachSpotlight() {
       const el = document.getElementById("spotlight");
       if (!el) return;
 
-      const reduce =
-        window.matchMedia &&
-        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       if (reduce) return;
 
       window.addEventListener(
@@ -314,10 +442,10 @@
       );
     })();
 
+    /* Follow system theme */
     function useSystemMode() {
       const getInitial = () =>
-        window.matchMedia &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches
+        window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
           ? "dark"
           : "light";
 
@@ -326,10 +454,8 @@
       React.useEffect(() => {
         const mq = window.matchMedia("(prefers-color-scheme: dark)");
         const handler = (e) => setMode(e.matches ? "dark" : "light");
-
         if (mq.addEventListener) mq.addEventListener("change", handler);
         else mq.addListener(handler);
-
         return () => {
           if (mq.removeEventListener) mq.removeEventListener("change", handler);
           else mq.removeListener(handler);
@@ -338,6 +464,95 @@
 
       return mode;
     }
+
+    /* Typewriter stroke bg (bigger + random positions) */
+    (function startTechWriter() {
+      const host = document.getElementById("techwriter");
+      if (!host) return;
+
+      const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (reduce) return;
+
+      const tagWords = Array.from(new Set(PROJECTS.flatMap(p => (p.tags || []))));
+      const preferredOrder = [
+        "Kotlin", "Android", "Go", "SwiftUI", "iOS", "C/C++", "Linux", "AOSP",
+        "Firebase", "React", "Node", "AR", "APIs", "Backend", "OTA", "HAL", "Kernel"
+      ];
+
+      const words = [];
+      preferredOrder.forEach(w => { if (tagWords.includes(w) && !words.includes(w)) words.push(w); });
+      tagWords.forEach(w => { if (!words.includes(w)) words.push(w); });
+      if (!words.length) return;
+
+      let idx = 0;
+      const cycleMs = 3250;
+
+      function randomPosition() {
+        const marginX = 12; // %
+        const marginY = 14; // %
+        const x = marginX + Math.random() * (100 - marginX * 2);
+        const y = marginY + Math.random() * (100 - marginY * 2);
+        return { x, y };
+      }
+
+      function render(word) {
+        host.innerHTML = "";
+
+        const svgNS = "http://www.w3.org/2000/svg";
+        const svg = document.createElementNS(svgNS, "svg");
+        svg.setAttribute("viewBox", "0 0 1000 600");
+        svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
+
+        const { x, y } = randomPosition();
+        const rot = (Math.random() * 10 - 5).toFixed(2);
+        const scale = (0.92 + Math.random() * 0.34).toFixed(2);
+        svg.style.left = x + "%";
+        svg.style.top = y + "%";
+        svg.style.transform = `translate(-50%, -50%) rotate(${rot}deg) scale(${scale})`;
+
+        const makeText = (cls) => {
+          const t = document.createElementNS(svgNS, "text");
+          t.setAttribute("x", "500");
+          t.setAttribute("y", "320");
+          t.setAttribute("text-anchor", "middle");
+          t.setAttribute("dominant-baseline", "middle");
+          t.setAttribute("font-family", "Roboto, system-ui, -apple-system, Segoe UI, Arial, sans-serif");
+          t.setAttribute("font-weight", "900");
+          t.setAttribute("font-size", "190"); /* bigger text */
+          t.textContent = word;
+          t.classList.add(cls);
+          return t;
+        };
+
+        const accent = makeText("twTextAccent");
+        const base = makeText("twTextBase");
+
+        svg.appendChild(accent);
+        svg.appendChild(base);
+        host.appendChild(svg);
+
+        const len = base.getComputedTextLength ? base.getComputedTextLength() : 1500;
+        const dash = (len + 30);
+
+        base.style.strokeDasharray = dash;
+        base.style.strokeDashoffset = dash;
+        accent.style.strokeDasharray = dash;
+        accent.style.strokeDashoffset = dash;
+
+        void base.getBBox();
+        base.style.setProperty("--dash", dash);
+        accent.style.setProperty("--dash", dash);
+
+        base.classList.add("run");
+        accent.classList.add("run");
+      }
+
+      render(words[idx]);
+      setInterval(() => {
+        idx = (idx + 1) % words.length;
+        render(words[idx]);
+      }, cycleMs);
+    })();
 
     function NavLink({ href, label, mode }) {
       const isDark = mode === "dark";
@@ -356,29 +571,11 @@
             borderRadius: 999,
             "&:hover": {
               opacity: 1,
-              backgroundColor: isDark
-                ? "rgba(255,255,255,0.06)"
-                : "rgba(138,21,56,0.10)",
+              backgroundColor: isDark ? "rgba(255,255,255,0.06)" : "rgba(138,21,56,0.10)",
             },
           },
         },
         label
-      );
-    }
-
-    function Section({ id, title, subtitle, children }) {
-      return React.createElement(
-        Box,
-        { id, sx: { mt: { xs: 6, md: 9 } }, className: "reveal", "data-reveal": "true" },
-        React.createElement(
-          Stack,
-          { spacing: 0.6, sx: { mb: 3 } },
-          React.createElement(Typography, { variant: "h5", fontWeight: 900 }, title),
-          subtitle
-            ? React.createElement(Typography, { variant: "body2", color: "text.secondary" }, subtitle)
-            : null
-        ),
-        children
       );
     }
 
@@ -393,8 +590,7 @@
             backgroundColor: "var(--panel)",
             backdropFilter: "blur(10px)",
             boxShadow: "0 0 0 rgba(0,0,0,0)",
-            transition:
-              "transform 180ms ease, border-color 180ms ease, background-color 180ms ease",
+            transition: "transform 180ms ease, border-color 180ms ease, background-color 180ms ease",
             "&:hover": {
               transform: "translateY(-3px)",
               borderColor: "var(--borderHover)",
@@ -407,7 +603,11 @@
       );
     }
 
-    function ProjectCard({ p }) {
+    /* ✅ UPDATED: screenshot on LEFT for side-by-side cards */
+    function ProjectCard({ p, mode }) {
+      const isDark = mode === "dark";
+      const hasShot = !!(p.screenshot && String(p.screenshot).trim());
+
       return React.createElement(
         Card,
         {
@@ -418,52 +618,117 @@
             borderColor: "var(--border)",
             backgroundColor: "var(--panel2)",
             backdropFilter: "blur(10px)",
-            transition:
-              "transform 180ms ease, border-color 180ms ease, background-color 180ms ease",
+            transition: "transform 180ms ease, border-color 180ms ease, background-color 180ms ease",
             "&:hover": {
               transform: "translateY(-3px)",
               borderColor: "var(--borderHover)",
               backgroundColor: "var(--panelHover)",
             },
-          },
+          }
         },
         React.createElement(
           CardContent,
-          { sx: { p: 2.5 } },
-          React.createElement(Typography, { variant: "h6", fontWeight: 900 }, p.title),
-          React.createElement(
-            Typography,
-            { variant: "body2", color: "text.secondary", sx: { mt: 1.1, lineHeight: 1.7 } },
-            p.description
-          ),
-          React.createElement(
-            Stack,
-            { direction: "row", spacing: 1, useFlexGap: true, flexWrap: "wrap", sx: { mt: 2 } },
-            p.tags.map((t) =>
-              React.createElement(Chip, {
-                key: t,
-                label: t,
-                size: "small",
-                variant: "outlined",
-                sx: {
-                  borderColor: "rgba(138,21,56,0.25)",
-                  color: "text.primary",
-                  backgroundColor: "transparent",
-                },
-              })
-            )
-          ),
-          p.links && p.links.repo
+          { sx: { p: 2.8 } },
+
+          hasShot
             ? React.createElement(
-                Box,
-                { sx: { mt: 2 } },
+                Grid,
+                { container: true, spacing: 3, alignItems: "center" },
+
+                /* LEFT: SCREENSHOT */
                 React.createElement(
-                  Link,
-                  { href: p.links.repo, target: "_blank", rel: "noreferrer", underline: "hover" },
-                  "View repository →"
+                  Grid,
+                  { item: true, xs: 12, md: 6 },
+                  React.createElement(
+                    "div",
+                    { className: "projectShot projectShot--side" },
+                    React.createElement("img", {
+                      src: p.screenshot,
+                      alt: p.title + " screenshot",
+                      loading: "lazy",
+                    })
+                  )
+                ),
+
+                /* RIGHT: TEXT */
+                React.createElement(
+                  Grid,
+                  { item: true, xs: 12, md: 6 },
+
+                  React.createElement(Typography, { variant: "h6", fontWeight: 900 }, p.title),
+                  React.createElement(
+                    Typography,
+                    { variant: "body2", color: "text.secondary", sx: { mt: 1.1, lineHeight: 1.7 } },
+                    p.description
+                  ),
+                  React.createElement(
+                    Stack,
+                    { direction: "row", spacing: 1, useFlexGap: true, flexWrap: "wrap", sx: { mt: 2 } },
+                    (p.tags || []).map((t) =>
+                      React.createElement(Chip, {
+                        key: t,
+                        label: t,
+                        size: "small",
+                        variant: "outlined",
+                        sx: {
+                          borderColor: isDark ? "rgba(255,255,255,0.14)" : "rgba(138,21,56,0.25)",
+                          color: "text.primary",
+                          backgroundColor: "transparent"
+                        }
+                      })
+                    )
+                  ),
+                  p.links && p.links.repo
+                    ? React.createElement(
+                        Box,
+                        { sx: { mt: 2 } },
+                        React.createElement(
+                          Link,
+                          { href: p.links.repo, target: "_blank", rel: "noreferrer", underline: "hover" },
+                          "View repository →"
+                        )
+                      )
+                    : null
                 )
               )
-            : null
+            : React.createElement(
+                React.Fragment,
+                null,
+                React.createElement(Typography, { variant: "h6", fontWeight: 900 }, p.title),
+                React.createElement(
+                  Typography,
+                  { variant: "body2", color: "text.secondary", sx: { mt: 1.1, lineHeight: 1.7 } },
+                  p.description
+                ),
+                React.createElement(
+                  Stack,
+                  { direction: "row", spacing: 1, useFlexGap: true, flexWrap: "wrap", sx: { mt: 2 } },
+                  (p.tags || []).map((t) =>
+                    React.createElement(Chip, {
+                      key: t,
+                      label: t,
+                      size: "small",
+                      variant: "outlined",
+                      sx: {
+                        borderColor: isDark ? "rgba(255,255,255,0.14)" : "rgba(138,21,56,0.25)",
+                        color: "text.primary",
+                        backgroundColor: "transparent"
+                      }
+                    })
+                  )
+                ),
+                p.links && p.links.repo
+                  ? React.createElement(
+                      Box,
+                      { sx: { mt: 2 } },
+                      React.createElement(
+                        Link,
+                        { href: p.links.repo, target: "_blank", rel: "noreferrer", underline: "hover" },
+                        "View repository →"
+                      )
+                    )
+                  : null
+              )
         )
       );
     }
@@ -488,16 +753,7 @@
             },
           },
           shape: { borderRadius: 16 },
-          typography: {
-            fontFamily: "Roboto, system-ui, -apple-system, Segoe UI, Arial, sans-serif",
-          },
-          components: {
-            MuiCssBaseline: {
-              styleOverrides: {
-                body: { color: "var(--text)" },
-              },
-            },
-          },
+          typography: { fontFamily: "Roboto, system-ui, -apple-system, Segoe UI, Arial, sans-serif" },
         });
       }, [mode, isDark]);
 
@@ -513,9 +769,7 @@
             color: "transparent",
             elevation: 0,
             sx: {
-              borderBottom: isDark
-                ? "1px solid rgba(255,255,255,0.08)"
-                : "1px solid rgba(138,21,56,0.14)",
+              borderBottom: isDark ? "1px solid rgba(255,255,255,0.08)" : "1px solid rgba(138,21,56,0.14)",
               backdropFilter: "blur(12px)",
               backgroundColor: isDark ? "rgba(11,15,23,0.55)" : "rgba(255,255,255,0.70)",
             },
@@ -526,16 +780,8 @@
             React.createElement(
               Stack,
               { spacing: 0, sx: { minWidth: 0 } },
-              React.createElement(
-                Typography,
-                { variant: "subtitle1", fontWeight: 950, noWrap: true },
-                PROFILE.name
-              ),
-              React.createElement(
-                Typography,
-                { variant: "caption", color: "text.secondary", noWrap: true },
-                PROFILE.role
-              )
+              React.createElement(Typography, { variant: "subtitle1", fontWeight: 950, noWrap: true }, PROFILE.name),
+              React.createElement(Typography, { variant: "caption", color: "text.secondary", noWrap: true }, PROFILE.role)
             ),
             React.createElement(
               Stack,
@@ -553,123 +799,66 @@
           Container,
           { maxWidth: "lg", sx: { py: { xs: 4, md: 7 } } },
 
-          // HERO
+          /* HERO */
           React.createElement(
             Box,
             { id: "home", className: "reveal", "data-reveal": "true" },
             React.createElement(
               Stack,
               { spacing: 2.2, sx: { maxWidth: 860 } },
-              React.createElement(
-                Typography,
-                { variant: "overline", color: "text.secondary", sx: { letterSpacing: 1.4 } },
-                "Mobile • Systems • AOSP"
-              ),
-              React.createElement(
-                Typography,
-                { variant: "h3", fontWeight: 950, sx: { letterSpacing: -0.8, lineHeight: 1.06 } },
-                PROFILE.headline
-              ),
-              React.createElement(
-                Typography,
-                { variant: "body1", color: "text.secondary", sx: { lineHeight: 1.85, maxWidth: 740 } },
-                PROFILE.intro
-              ),
+              React.createElement(Typography, { variant: "overline", color: "text.secondary", sx: { letterSpacing: 1.4 } }, "Mobile • Systems • AOSP"),
+              React.createElement(Typography, { variant: "h3", fontWeight: 950, sx: { letterSpacing: -0.8, lineHeight: 1.06 } }, PROFILE.headline),
+              React.createElement(Typography, { variant: "body1", color: "text.secondary", sx: { lineHeight: 1.85, maxWidth: 740 } }, PROFILE.intro),
               React.createElement(
                 Stack,
                 { direction: "row", spacing: 1.2, useFlexGap: true, flexWrap: "wrap", sx: { pt: 1 } },
-                React.createElement(
-                  Button,
-                  {
-                    variant: "outlined",
-                    href: "#projects",
-                    sx: {
-                      textTransform: "none",
-                      fontWeight: 800,
-                      borderRadius: 999,
-                      px: 2.0,
-                      borderColor: isDark ? "rgba(255,255,255,0.18)" : "rgba(138,21,56,0.26)",
-                      color: "text.primary",
-                      "&:hover": {
-                        borderColor: isDark ? "rgba(255,255,255,0.28)" : "rgba(138,21,56,0.40)",
-                        backgroundColor: isDark ? "rgba(255,255,255,0.05)" : "rgba(138,21,56,0.08)",
+                ["View portfolio", "GitHub", "Email", "Instagram"].map((label) => {
+                  const href =
+                    label === "View portfolio" ? "#projects" :
+                      label === "GitHub" ? PROFILE.github :
+                        label === "Email" ? "mailto:" + PROFILE.email :
+                          PROFILE.instagram;
+
+                  const isExternal = label === "GitHub" || label === "Instagram";
+
+                  return React.createElement(
+                    Button,
+                    {
+                      key: label,
+                      variant: "outlined",
+                      href,
+                      target: isExternal ? "_blank" : undefined,
+                      rel: isExternal ? "noreferrer" : undefined,
+                      sx: {
+                        textTransform: "none",
+                        fontWeight: 800,
+                        borderRadius: 999,
+                        px: 2.0,
+                        borderColor: isDark ? "rgba(255,255,255,0.18)" : "rgba(138,21,56,0.26)",
+                        color: "text.primary",
+                        "&:hover": {
+                          borderColor: isDark ? "rgba(255,255,255,0.28)" : "rgba(138,21,56,0.40)",
+                          backgroundColor: isDark ? "rgba(255,255,255,0.05)" : "rgba(138,21,56,0.08)",
+                        },
                       },
                     },
-                  },
-                  "View portfolio"
-                ),
-                React.createElement(
-                  Button,
-                  {
-                    variant: "outlined",
-                    href: PROFILE.github,
-                    target: "_blank",
-                    rel: "noreferrer",
-                    sx: {
-                      textTransform: "none",
-                      fontWeight: 800,
-                      borderRadius: 999,
-                      px: 2.0,
-                      borderColor: isDark ? "rgba(255,255,255,0.18)" : "rgba(138,21,56,0.26)",
-                      color: "text.primary",
-                      "&:hover": {
-                        borderColor: isDark ? "rgba(255,255,255,0.28)" : "rgba(138,21,56,0.40)",
-                        backgroundColor: isDark ? "rgba(255,255,255,0.05)" : "rgba(138,21,56,0.08)",
-                      },
-                    },
-                  },
-                  "GitHub"
-                ),
-                React.createElement(
-                  Button,
-                  {
-                    variant: "outlined",
-                    href: "mailto:" + PROFILE.email,
-                    sx: {
-                      textTransform: "none",
-                      fontWeight: 800,
-                      borderRadius: 999,
-                      px: 2.0,
-                      borderColor: isDark ? "rgba(255,255,255,0.18)" : "rgba(138,21,56,0.26)",
-                      color: "text.primary",
-                      "&:hover": {
-                        borderColor: isDark ? "rgba(255,255,255,0.28)" : "rgba(138,21,56,0.40)",
-                        backgroundColor: isDark ? "rgba(255,255,255,0.05)" : "rgba(138,21,56,0.08)",
-                      },
-                    },
-                  },
-                  "Email"
-                ),
-                React.createElement(
-                  Button,
-                  {
-                    variant: "outlined",
-                    href: PROFILE.instagram,
-                    target: "_blank",
-                    rel: "noreferrer",
-                    sx: {
-                      textTransform: "none",
-                      fontWeight: 800,
-                      borderRadius: 999,
-                      px: 2.0,
-                      borderColor: isDark ? "rgba(255,255,255,0.18)" : "rgba(138,21,56,0.26)",
-                      color: "text.primary",
-                      "&:hover": {
-                        borderColor: isDark ? "rgba(255,255,255,0.28)" : "rgba(138,21,56,0.40)",
-                        backgroundColor: isDark ? "rgba(255,255,255,0.05)" : "rgba(138,21,56,0.08)",
-                      },
-                    },
-                  },
-                  "Instagram"
-                )
+                    label
+                  );
+                })
               )
             )
           ),
 
-          // ABOUT
+          /* ABOUT */
           React.createElement(
-            Section,
-            { id: "about", title: "About", subtitle: "A bit about what I do and how I work." },
+            Box,
+            { id: "about", sx: { mt: { xs: 6, md: 9 } }, className: "reveal", "data-reveal": "true" },
+            React.createElement(
+              Stack,
+              { spacing: 0.6, sx: { mb: 3 } },
+              React.createElement(Typography, { variant: "h5", fontWeight: 900 }, "About"),
+              React.createElement(Typography, { variant: "body2", color: "text.secondary" }, "A bit about what I do and how I work.")
+            ),
             React.createElement(
               GlassCard,
               { sx: { p: { xs: 2.2, md: 3 } } },
@@ -684,7 +873,12 @@
                 React.createElement(
                   Typography,
                   { variant: "body1", color: "text.secondary", sx: { lineHeight: 1.9 } },
-                  "Currently, I work as an iOS Developer at StackGeeks, building apps with SwiftUI, Objective-C, and Firebase—AR live filters (VisionKit), real-time chat, sketching tools, and internal platforms. I care about clean architecture, smooth UX, and scalable code."
+                  "Currently, I work as an Frontend Developer at CoreAI Technologies, where I design and build feature-rich applications using SwiftUI, UIKit, Kotlin, Compose. My work includes working Grata Technologies White-Lable Projects like Arlington, Chard, Frontrow, Ironclad. I also Work on React Frontend Projects"
+                ),
+                React.createElement(
+                  Typography,
+                  { variant: "body1", color: "text.secondary", sx: { lineHeight: 1.9 } },
+                  "Previously, I worked as an iOS Developer at StackGeeks, building apps with SwiftUI, Objective-C, and Firebase—AR live filters (VisionKit), real-time chat, sketching tools, and internal platforms. I care about clean architecture, smooth UX, and scalable code."
                 ),
                 React.createElement(
                   Typography,
@@ -695,10 +889,16 @@
             )
           ),
 
-          // SKILLS
+          /* SKILLS */
           React.createElement(
-            Section,
-            { id: "skills", title: "Skills", subtitle: "Tools and technologies I use regularly." },
+            Box,
+            { id: "skills", sx: { mt: { xs: 6, md: 9 } }, className: "reveal", "data-reveal": "true" },
+            React.createElement(
+              Stack,
+              { spacing: 0.6, sx: { mb: 3 } },
+              React.createElement(Typography, { variant: "h5", fontWeight: 900 }, "Skills"),
+              React.createElement(Typography, { variant: "body2", color: "text.secondary" }, "Tools and technologies I use regularly.")
+            ),
             React.createElement(
               Grid,
               { container: true, spacing: 2.2 },
@@ -734,8 +934,8 @@
                           sx: {
                             borderColor: isDark ? "rgba(255,255,255,0.14)" : "rgba(138,21,56,0.25)",
                             color: "text.primary",
-                            backgroundColor: "transparent",
-                          },
+                            backgroundColor: "transparent"
+                          }
                         })
                       )
                     )
@@ -745,46 +945,44 @@
             )
           ),
 
-          // PROJECTS
+          /* PROJECTS */
           React.createElement(
-            Section,
-            { id: "projects", title: "Portfolio", subtitle: "Selected work and technical projects." },
+            Box,
+            { id: "projects", sx: { mt: { xs: 6, md: 9 } }, className: "reveal", "data-reveal": "true" },
+            React.createElement(
+              Stack,
+              { spacing: 0.6, sx: { mb: 3 } },
+              React.createElement(Typography, { variant: "h5", fontWeight: 900 }, "Portfolio"),
+              React.createElement(Typography, { variant: "body2", color: "text.secondary" }, "Selected work and technical projects.")
+            ),
+
             React.createElement(
               GlassCard,
               { sx: { p: { xs: 2.2, md: 2.6 }, mb: 2.5 } },
-              React.createElement(
-                Typography,
-                { variant: "subtitle2", color: "text.secondary", sx: { letterSpacing: 0.6 } },
-                "Latest"
-              ),
-              React.createElement(
-                Typography,
-                { variant: "h6", fontWeight: 950, sx: { mt: 0.4 } },
-                LATEST.company
-              ),
+              React.createElement(Typography, { variant: "subtitle2", color: "text.secondary", sx: { letterSpacing: 0.6 } }, "Latest"),
+              React.createElement(Typography, { variant: "h6", fontWeight: 950, sx: { mt: 0.4 } }, LATEST.company),
               React.createElement(
                 Stack,
                 { spacing: 0.6, sx: { mt: 1.2 } },
                 LATEST.bullets.map((b) =>
-                  React.createElement(
-                    Typography,
-                    { key: b, variant: "body2", color: "text.secondary" },
-                    "• " + b
-                  )
+                  React.createElement(Typography, { key: b, variant: "body2", color: "text.secondary" }, "• " + b)
                 )
               )
             ),
+
             React.createElement(
               Grid,
               { container: true, spacing: 2.2 },
-              PROJECTS.map((p) =>
-                React.createElement(
+              PROJECTS.map((p) => {
+                const hasShot = !!(p.screenshot && String(p.screenshot).trim());
+                return React.createElement(
                   Grid,
-                  { item: true, xs: 12, md: 6, key: p.title },
-                  React.createElement(ProjectCard, { p })
-                )
-              )
+                  { item: true, xs: 12, md: hasShot ? 12 : 6, key: p.title },
+                  React.createElement(ProjectCard, { p, mode })
+                );
+              })
             ),
+
             React.createElement(
               Box,
               { sx: { mt: 2.5 } },
@@ -794,13 +992,7 @@
                 "More on ",
                 React.createElement(
                   Link,
-                  {
-                    href: PROFILE.github,
-                    target: "_blank",
-                    rel: "noreferrer",
-                    underline: "hover",
-                    sx: { color: "text.primary", fontWeight: 900 },
-                  },
+                  { href: PROFILE.github, target: "_blank", rel: "noreferrer", underline: "hover", sx: { color: "text.primary", fontWeight: 900 } },
                   "GitHub"
                 ),
                 "."
@@ -808,10 +1000,16 @@
             )
           ),
 
-          // CONTACT
+          /* CONTACT */
           React.createElement(
-            Section,
-            { id: "contact", title: "Contact", subtitle: "Reach out for opportunities or collaboration." },
+            Box,
+            { id: "contact", sx: { mt: { xs: 6, md: 9 } }, className: "reveal", "data-reveal": "true" },
+            React.createElement(
+              Stack,
+              { spacing: 0.6, sx: { mb: 3 } },
+              React.createElement(Typography, { variant: "h5", fontWeight: 900 }, "Contact"),
+              React.createElement(Typography, { variant: "body2", color: "text.secondary" }, "Reach out for opportunities or collaboration.")
+            ),
             React.createElement(
               GlassCard,
               { sx: { p: { xs: 2.2, md: 3 } } },
@@ -822,22 +1020,18 @@
                   Stack,
                   { spacing: 0.4 },
                   React.createElement(Typography, { variant: "subtitle2", color: "text.secondary" }, "Email"),
-                  React.createElement(
-                    Link,
-                    { href: "mailto:" + PROFILE.email, underline: "hover", sx: { fontWeight: 950, color: "text.primary" } },
-                    PROFILE.email
-                  )
+                  React.createElement(Link, { href: "mailto:" + PROFILE.email, underline: "hover", sx: { fontWeight: 950, color: "text.primary" } }, PROFILE.email)
                 ),
                 React.createElement(
                   Stack,
                   { direction: "row", spacing: 1.2, flexWrap: "wrap" },
                   ["Email", "GitHub", "Instagram"].map((label) => {
                     const href =
-                      label === "Email"
-                        ? "mailto:" + PROFILE.email
-                        : label === "GitHub"
-                        ? PROFILE.github
-                        : PROFILE.instagram;
+                      label === "Email" ? "mailto:" + PROFILE.email :
+                        label === "GitHub" ? PROFILE.github :
+                          PROFILE.instagram;
+
+                    const isExternal = label !== "Email";
 
                     return React.createElement(
                       Button,
@@ -845,8 +1039,8 @@
                         key: label,
                         variant: "outlined",
                         href,
-                        target: label === "Email" ? undefined : "_blank",
-                        rel: label === "Email" ? undefined : "noreferrer",
+                        target: isExternal ? "_blank" : undefined,
+                        rel: isExternal ? "noreferrer" : undefined,
                         sx: {
                           textTransform: "none",
                           fontWeight: 850,
@@ -856,9 +1050,9 @@
                           color: "text.primary",
                           "&:hover": {
                             borderColor: isDark ? "rgba(255,255,255,0.28)" : "rgba(138,21,56,0.40)",
-                            backgroundColor: isDark ? "rgba(255,255,255,0.05)" : "rgba(138,21,56,0.08)",
-                          },
-                        },
+                            backgroundColor: isDark ? "rgba(255,255,255,0.05)" : "rgba(138,21,56,0.08)"
+                          }
+                        }
                       },
                       label
                     );
@@ -868,24 +1062,18 @@
             )
           ),
 
-          // FOOTER
+          /* FOOTER */
           React.createElement(
             Box,
             {
               sx: {
                 mt: 8,
                 pt: 3,
-                borderTop: isDark
-                  ? "1px solid rgba(255,255,255,0.08)"
-                  : "1px solid rgba(138,21,56,0.14)",
-                color: "text.secondary",
-              },
+                borderTop: isDark ? "1px solid rgba(255,255,255,0.08)" : "1px solid rgba(138,21,56,0.14)",
+                color: "text.secondary"
+              }
             },
-            React.createElement(
-              Typography,
-              { variant: "caption", textAlign: "center", sx: { display: "block" } },
-              `© ${new Date().getFullYear()} ${PROFILE.name}`
-            )
+            React.createElement(Typography, { variant: "caption", textAlign: "center", sx: { display: "block" } }, `© ${new Date().getFullYear()} ${PROFILE.name}`)
           )
         )
       );
@@ -894,4 +1082,5 @@
     ReactDOM.createRoot(document.getElementById("root")).render(React.createElement(App));
   </script>
 </body>
+
 </html>
