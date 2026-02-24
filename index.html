@@ -1,391 +1,824 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Inderpreet Singh Bhangu — Portfolio</title>
-  <meta name="description"
-    content="Portfolio of Inderpreet Singh Bhangu — Android & iOS Developer, AOSP, OTA systems." />
+  <meta name="description" content="Portfolio of Inderpreet Singh Bhangu — Android & iOS Developer, AOSP, OTA systems.">
+  <link rel="icon" href="data:," />
 
-  <!-- Roboto -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
+  <!-- Google Fonts: Outfit (Headings) & Inter (Body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;700;900&display=swap"
+    rel="stylesheet">
+
+  <!-- Phosphor Icons -->
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
   <style>
     :root {
-      color-scheme: light dark;
+      /* Dark Theme (Default) */
+      --bg-color: #07070a;
+      --text-primary: #f3f4f6;
+      --text-secondary: #9ca3af;
+      --accent: #e11d48;
+      /* Crimson / Rose accent */
+      --accent-glow: rgba(225, 29, 72, 0.4);
 
-      /* Base */
-      --bg: #0b0f17;
-      --text: #eaf0ff;
-      --muted: rgba(234, 240, 255, 0.72);
+      --panel-bg: rgba(255, 255, 255, 0.03);
+      --panel-border: rgba(255, 255, 255, 0.08);
+      --panel-hover: rgba(255, 255, 255, 0.06);
+      --panel-hover-border: rgba(225, 29, 72, 0.4);
 
-      /* Surfaces */
-      --panel: rgba(255, 255, 255, 0.04);
-      --panel2: rgba(255, 255, 255, 0.035);
-      --panelHover: rgba(255, 255, 255, 0.06);
+      --nav-bg: rgba(7, 7, 10, 0.65);
+      --blur: blur(16px);
 
-      /* Borders */
-      --border: rgba(168, 28, 61, 0.22);
-      --borderHover: rgba(168, 28, 61, 0.38);
-
-      /* Wine glows */
-      --g1: rgba(136, 19, 55, 0.26);
-      --g2: rgba(179, 18, 23, 0.22);
-      --g3: rgba(88, 12, 30, 0.28);
-
-      /* Spotlight */
-      --spot: rgba(168, 28, 61, 0.14);
-      --spotBlend: screen;
-
-      /* Typewriter (SVG stroke) */
-      --twStroke: rgba(234, 240, 255, 0.38);
-      --twAccent: rgba(168, 28, 61, 0.62);
-      --twOpacity: 0.32;
+      --font-heading: 'Outfit', sans-serif;
+      --font-body: 'Inter', sans-serif;
     }
 
-    @media (prefers-color-scheme: light) {
-      :root {
-        --bg: #fbf7f8;
-        --text: #1b1b1f;
-        --muted: rgba(27, 27, 31, 0.72);
+    [data-theme="light"] {
+      --bg-color: #f8fafc;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --accent: #dc2626;
+      --accent-glow: rgba(220, 38, 38, 0.2);
 
-        --panel: rgba(255, 255, 255, 0.75);
-        --panel2: rgba(255, 255, 255, 0.66);
-        --panelHover: rgba(255, 255, 255, 0.84);
+      --panel-bg: rgba(255, 255, 255, 0.7);
+      --panel-border: rgba(0, 0, 0, 0.08);
+      --panel-hover: rgba(255, 255, 255, 0.9);
+      --panel-hover-border: rgba(220, 38, 38, 0.4);
 
-        --border: rgba(138, 21, 56, 0.18);
-        --borderHover: rgba(138, 21, 56, 0.32);
-
-        --g1: rgba(136, 19, 55, 0.16);
-        --g2: rgba(179, 18, 23, 0.10);
-        --g3: rgba(88, 12, 30, 0.10);
-
-        --spot: rgba(138, 21, 56, 0.10);
-        --spotBlend: multiply;
-
-        --twStroke: rgba(27, 27, 31, 0.20);
-        --twAccent: rgba(138, 21, 56, 0.40);
-        --twOpacity: 0.45;
-      }
+      --nav-bg: rgba(248, 250, 252, 0.65);
     }
 
-    html,
-    body {
+    * {
+      box-sizing: border-box;
       margin: 0;
-      height: 100%;
-      font-family: Roboto, system-ui, -apple-system, Segoe UI, Arial, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-    }
-
-    #root {
-      min-height: 100%;
-      position: relative;
-      isolation: isolate;
-      z-index: 0;
+      padding: 0;
     }
 
     html {
       scroll-behavior: smooth;
     }
 
-    /* ====== Background ====== */
-    @keyframes bgPan {
-      0% { background-position: 0% 0%, 100% 0%, 50% 100%; }
-      50% { background-position: 30% 10%, 70% 20%, 45% 90%; }
-      100% { background-position: 0% 0%, 100% 0%, 50% 100%; }
+    body {
+      font-family: var(--font-body);
+      background-color: var(--bg-color);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+      transition: background-color 0.3s ease, color 0.3s ease;
     }
 
-    @keyframes grainShift {
-      0% { transform: translate3d(0, 0, 0); }
-      25% { transform: translate3d(-1%, 1%, 0); }
-      50% { transform: translate3d(1%, -1%, 0); }
-      75% { transform: translate3d(-1%, -1%, 0); }
-      100% { transform: translate3d(0, 0, 0); }
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 0.5em;
     }
 
-    .bg {
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* --- Background Effects --- */
+    .bg-fx {
       position: fixed;
-      inset: 0;
-      z-index: -4;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: -1;
+      overflow: hidden;
       pointer-events: none;
-      background-image:
-        radial-gradient(1200px 700px at 12% 12%, var(--g1), transparent 60%),
-        radial-gradient(1000px 700px at 88% 18%, var(--g2), transparent 55%),
-        radial-gradient(900px 700px at 50% 90%, var(--g3), transparent 60%);
-      background-color: var(--bg);
-      animation: bgPan 16s ease-in-out infinite;
-      filter: saturate(1.05);
     }
 
-    .spotlight {
-      position: fixed;
-      inset: 0;
-      z-index: -3;
-      pointer-events: none;
-      background: radial-gradient(600px 600px at var(--mx, 50%) var(--my, 20%),
-          var(--spot),
-          transparent 55%);
-      mix-blend-mode: var(--spotBlend);
-      opacity: 0.9;
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(100px);
+      opacity: 0.5;
+      animation: float 20s infinite ease-in-out alternate;
+    }
+
+    [data-theme="light"] .orb {
+      opacity: 0.2;
+    }
+
+    .orb-1 {
+      width: 40vw;
+      height: 40vw;
+      background: radial-gradient(circle, rgba(225, 29, 72, 0.15) 0%, transparent 70%);
+      top: -10%;
+      left: -10%;
+      animation-duration: 25s;
+    }
+
+    .orb-2 {
+      width: 50vw;
+      height: 50vw;
+      background: radial-gradient(circle, rgba(79, 70, 229, 0.1) 0%, transparent 70%);
+      bottom: -10%;
+      right: -10%;
+      animation-duration: 30s;
+      animation-delay: -5s;
     }
 
     .grain {
-      position: fixed;
-      inset: 0;
-      z-index: -1;
-      pointer-events: none;
-      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='160' height='160' filter='url(%23n)' opacity='0.22'/></svg>");
-      background-repeat: repeat;
-      opacity: 0.06;
-      animation: grainShift 7s steps(2) infinite;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+      opacity: 0.03;
       mix-blend-mode: overlay;
     }
 
-    /* Scroll reveal */
-    .reveal {
-      opacity: 0;
-      transform: translateY(10px);
-      transition: opacity 650ms ease, transform 650ms ease;
-      will-change: opacity, transform;
+    [data-theme="light"] .grain {
+      opacity: 0.05;
     }
 
-    .reveal.in {
+    @keyframes float {
+      0% {
+        transform: translate(0, 0) scale(1);
+      }
+
+      50% {
+        transform: translate(5%, 5%) scale(1.1);
+      }
+
+      100% {
+        transform: translate(-5%, 10%) scale(0.9);
+      }
+    }
+
+    /* --- Layout --- */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* --- Navigation --- */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: var(--nav-bg);
+      backdrop-filter: var(--blur);
+      -webkit-backdrop-filter: var(--blur);
+      border-bottom: 1px solid var(--panel-border);
+      z-index: 100;
+      padding: 1rem 0;
+      transition: all 0.3s ease;
+    }
+
+    .nav-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-family: var(--font-heading);
+      font-weight: 900;
+      font-size: 1.25rem;
+      letter-spacing: -0.02em;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .logo span {
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      font-family: var(--font-body);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    .nav-links a {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      transition: color 0.2s, transform 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--text-primary);
+      transform: translateY(-1px);
+    }
+
+    .theme-toggle {
+      background: none;
+      border: none;
+      color: var(--text-primary);
+      cursor: pointer;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: var(--panel-bg);
+      border: 1px solid var(--panel-border);
+      transition: all 0.2s;
+    }
+
+    .theme-toggle:hover {
+      background: var(--panel-hover);
+      border-color: var(--accent);
+    }
+
+    /* --- Components --- */
+    .glass-panel {
+      background: var(--panel-bg);
+      border: 1px solid var(--panel-border);
+      border-radius: 20px;
+      padding: 2.5rem;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .glass-panel:hover {
+      transform: translateY(-4px);
+      border-color: var(--panel-hover-border);
+      box-shadow: 0 10px 40px -10px var(--accent-glow);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      border-radius: 999px;
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: 1px solid var(--panel-border);
+      background: var(--panel-bg);
+      color: var(--text-primary);
+    }
+
+    .btn:hover {
+      border-color: var(--accent);
+      background: var(--panel-hover);
+      transform: translateY(-2px);
+    }
+
+    .btn-primary {
+      background: var(--text-primary);
+      color: var(--bg-color);
+      border: none;
+    }
+
+    .btn-primary:hover {
+      background: var(--text-secondary);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px -8px var(--text-primary);
+    }
+
+    .chip {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      background: var(--panel-bg);
+      border: 1px solid var(--panel-border);
+      color: var(--text-secondary);
+    }
+
+    .section-header {
+      margin-bottom: 2.5rem;
+    }
+
+    .section-header h2 {
+      font-size: 2.5rem;
+      letter-spacing: -0.02em;
+    }
+
+    .section-header p {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+    }
+
+    /* --- Sections --- */
+    section {
+      padding: 6rem 0;
+    }
+
+    /* Hero */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: 100px;
+      /* Offset nav */
+    }
+
+    .hero-content {
+      max-width: 800px;
+    }
+
+    .hero-label {
+      display: inline-block;
+      color: var(--accent);
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-size: 0.875rem;
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+
+    .hero-label::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, var(--accent) 0%, transparent 100%);
+    }
+
+    .hero-content h1 {
+      font-size: clamp(3rem, 6vw, 5rem);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-desc {
+      font-size: clamp(1.125rem, 2vw, 1.35rem);
+      color: var(--text-secondary);
+      margin-bottom: 2.5rem;
+      max-width: 600px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    /* Skills */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .skill-list {
+      list-style: none;
+      margin: 1.5rem 0;
+    }
+
+    .skill-list li {
+      color: var(--text-secondary);
+      margin-bottom: 0.5rem;
+      padding-left: 1.25rem;
+      position: relative;
+    }
+
+    .skill-list li::before {
+      content: "→";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      opacity: 0.7;
+    }
+
+    .skill-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1.5rem;
+    }
+
+    /* Projects */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .project-card {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      padding: 1.5rem;
+    }
+
+    @media (min-width: 768px) {
+      .project-card.has-img {
+        flex-direction: row;
+        align-items: center;
+        padding: 1.5rem;
+      }
+
+      .project-card.has-img .project-img-wrapper {
+        flex: 1;
+        max-width: 45%;
+      }
+
+      .project-card.has-img .project-info {
+        flex: 1;
+      }
+    }
+
+    .project-img-wrapper {
+      border-radius: 12px;
+      overflow: hidden;
+      background: var(--panel-bg);
+      border: 1px solid var(--panel-border);
+      aspect-ratio: 16/9;
+      display: grid;
+      place-items: center;
+      padding: 1rem;
+    }
+
+    .project-img-wrapper img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      border-radius: 6px;
+      transition: transform 0.5s ease;
+    }
+
+    .project-card:hover .project-img-wrapper img {
+      transform: scale(1.05);
+    }
+
+    .project-info h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .project-info p {
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+    }
+
+    .project-links {
+      margin-top: 1.5rem;
+      display: flex;
+      gap: 1rem;
+    }
+
+    /* Contact */
+    .contact-content {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    @media (min-width: 768px) {
+      .contact-content {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+    }
+
+    .contact-email span {
+      display: block;
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .contact-email a {
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      transition: color 0.2s;
+      word-break: break-all;
+    }
+
+    .contact-email a:hover {
+      color: var(--accent);
+    }
+
+    .contact-socials {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    /* Footer */
+    footer {
+      padding: 3rem 0;
+      text-align: center;
+      border-top: 1px solid var(--panel-border);
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+    }
+
+    /* Animation Classes */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal.active {
       opacity: 1;
       transform: translateY(0);
     }
 
-    /* ====== Typewriter outline background (SVG) ====== */
-    .techwriter {
-      position: fixed;
-      inset: 0;
-      z-index: -2;
-      pointer-events: none;
-      opacity: var(--twOpacity);
+    .delay-1 {
+      transition-delay: 0.1s;
     }
 
-    /* Bigger overall (you asked bigger) */
-    .techwriter svg {
-      position: absolute;
-      width: min(980px, 96vw);
-      height: min(440px, 52vh);
-      display: block;
-      will-change: transform, left, top, opacity;
+    .delay-2 {
+      transition-delay: 0.2s;
     }
 
-    .twTextBase {
-      fill: none;
-      stroke: var(--twStroke);
-      stroke-width: 2.8px;
-      stroke-linejoin: round;
-      stroke-linecap: round;
+    .delay-3 {
+      transition-delay: 0.3s;
     }
 
-    .twTextAccent {
-      fill: none;
-      stroke: var(--twAccent);
-      stroke-width: 2.8px;
-      stroke-linejoin: round;
-      stroke-linecap: round;
-      opacity: 0.55;
-      filter: drop-shadow(0 0 10px rgba(168, 28, 61, 0.22));
-    }
+    @media (max-width: 768px) {
+      .mobile-menu-btn {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+      }
 
-    .run.twTextBase,
-    .run.twTextAccent {
-      animation:
-        twDraw 1.35s steps(34, end) forwards,
-        twHoldFade 3.25s ease forwards;
-    }
+      .nav-links {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: var(--nav-bg);
+        border-bottom: 1px solid var(--panel-border);
+        padding: 1.5rem 0;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+        display: none;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      }
 
-    @keyframes twDraw {
-      from { stroke-dashoffset: var(--dash, 1400); }
-      to { stroke-dashoffset: 0; }
-    }
+      .nav-links.active {
+        display: flex;
+        animation: fadeIn 0.3s ease;
+      }
 
-    @keyframes twHoldFade {
-      0% { opacity: 1; }
-      62% { opacity: 1; }
-      100% { opacity: 0; }
-    }
+      .hero-content h1 {
+        font-size: 2.5rem;
+      }
 
-    /* ===== Project screenshot styles ===== */
-    .projectShot {
-      width: 100%;
-      border-radius: 16px;
-      overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      background: linear-gradient(to bottom,
-          rgba(0, 0, 0, 0.18),
-          rgba(0, 0, 0, 0.05));
-      display: grid;
-      place-items: center;
-    }
+      .hero-desc {
+        font-size: 1.1rem;
+      }
 
-    @media (prefers-color-scheme: light) {
-      .projectShot {
-        border: 1px solid rgba(138, 21, 56, 0.14);
-        background: linear-gradient(to bottom,
-            rgba(138, 21, 56, 0.06),
-            rgba(138, 21, 56, 0.02));
+      .glass-panel {
+        padding: 1.5rem;
+      }
+
+      section {
+        padding: 4rem 0;
+      }
+
+      .section-header h2 {
+        font-size: 2rem;
+      }
+
+      .skills-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+        width: 100%;
+      }
+
+      .hero-actions .btn {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .contact-socials {
+        flex-direction: column;
+        width: 100%;
+      }
+
+      .contact-socials .btn {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .contact-email a {
+        font-size: 1.25rem;
       }
     }
 
-    .projectShot img {
-      max-width: 100%;
-      max-height: 360px;
-      width: auto;
-      height: auto;
-      object-fit: contain;
-      display: block;
-      padding: 12px;
-      opacity: 0.96;
-    }
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
 
-    /* Side-by-side (parallel) shot */
-    .projectShot--side {
-      margin-top: 0;            /* no top margin in side layout */
-      height: 100%;
-      min-height: 260px;
-    }
-
-    .projectShot--side img {
-      max-height: 320px;        /* slightly smaller in side layout */
-      padding: 10px;
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      html { scroll-behavior: auto; }
-      .bg, .grain { animation: none !important; }
-      .reveal { transition: none; opacity: 1; transform: none; }
-      .techwriter { opacity: 0.18; }
-      .run.twTextBase, .run.twTextAccent { animation: none !important; opacity: 1; }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
   </style>
-
-  <!-- React -->
-  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-
-  <!-- Emotion (MUI) -->
-  <script src="https://unpkg.com/@emotion/react@11/dist/emotion-react.umd.min.js"></script>
-  <script src="https://unpkg.com/@emotion/styled@11/dist/emotion-styled.umd.min.js"></script>
-
-  <!-- MUI -->
-  <script src="https://unpkg.com/@mui/material@5/umd/material-ui.production.min.js"></script>
-
-  <link rel="icon" href="data:," />
 </head>
 
 <body>
-  <div class="bg"></div>
-  <div class="spotlight" id="spotlight"></div>
 
-  <!-- moving typewriter bg -->
-  <div class="techwriter" id="techwriter"></div>
+  <!-- Background Elements -->
+  <div class="bg-fx">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="grain"></div>
+  </div>
 
-  <div class="grain"></div>
-  <div id="root"></div>
+  <!-- Navigation -->
+  <nav>
+    <div class="container nav-content">
+      <a href="#" class="logo">
+        Inderpreet <span>Bhangu</span>
+      </a>
+      <div class="nav-links" id="nav-links">
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#portfolio">Portfolio</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <div class="nav-right" style="display: flex; align-items: center; gap: 1rem;">
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle Theme">
+          <i class="ph ph-sun" id="theme-icon"></i>
+        </button>
+        <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle Menu"
+          style="display: none; background: transparent; border: none; color: var(--text-primary); font-size: 1.5rem; cursor: pointer;">
+          <i class="ph ph-list"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
 
+  <!-- Main Content -->
+  <main>
+    <!-- Hero Section -->
+    <section id="hero">
+      <div class="container">
+        <div class="hero-content">
+          <span class="hero-label reveal">Mobile • Systems • AOSP</span>
+          <h1 class="reveal delay-1">I build, on mobile and on the system side.</h1>
+          <p class="hero-desc reveal delay-2">I build production-ready mobile apps and low-level Android system
+            solutions—clean UX on the surface, solid engineering underneath.</p>
+          <div class="hero-actions reveal delay-3">
+            <a href="#portfolio" class="btn btn-primary">
+              <i class="ph ph-briefcase"></i> View Portfolio
+            </a>
+            <a href="https://github.com/IPSBHANGU" target="_blank" rel="noopener noreferrer" class="btn">
+              <i class="ph ph-github-logo"></i> GitHub
+            </a>
+            <a href="mailto:inderpreetbhangu2@gmail.com" class="btn">
+              <i class="ph ph-envelope-simple"></i> Email
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+      <div class="container">
+        <div class="section-header reveal">
+          <h2>About</h2>
+          <p>A bit about what I do and how I work.</p>
+        </div>
+        <div class="glass-panel reveal delay-1">
+          <p style="margin-bottom: 1.5rem; color: var(--text-secondary); line-height: 1.8;">
+            I’m Inderpreet Singh Bhangu, a software engineer focused on iOS development and low-level Android system
+            engineering. I graduated with a Bachelor’s degree in Computer Science & Engineering from Punjab Technical
+            University in 2024, and I’ve been building production-ready software and open-source systems since my early
+            college years.
+          </p>
+          <p style="margin-bottom: 1.5rem; color: var(--text-secondary); line-height: 1.8;">
+            Currently, I work as a Frontend Developer at CoreAI Technologies, where I design and build feature-rich
+            applications using SwiftUI, UIKit, Kotlin, and Compose. My work includes Grata Technologies White-Label
+            Projects like Arlington, Chard, Frontrow, and Ironclad. I also work on React Frontend Projects.
+          </p>
+          <p style="margin-bottom: 1.5rem; color: var(--text-secondary); line-height: 1.8;">
+            Previously, I worked as an iOS Developer at StackGeeks, building apps with SwiftUI, Objective-C, and
+            Firebase—AR live filters (VisionKit), real-time chat, sketching tools, and internal platforms. I care about
+            clean architecture, smooth UX, and scalable code.
+          </p>
+          <p style="color: var(--text-secondary); line-height: 1.8;">
+            Alongside apps, I’ve been contributing to AOSP / custom ROM development since 2017—kernel/device
+            trees/HALs/Qualcomm platforms, bring-up and debugging across kernel versions from 3.10 to 5.15.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills">
+      <div class="container">
+        <div class="section-header reveal">
+          <h2>Skills</h2>
+          <p>Tools and technologies I use regularly.</p>
+        </div>
+        <div class="skills-grid" id="skills-container">
+          <!-- Skills will be injected here via JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio">
+      <div class="container">
+        <div class="section-header reveal">
+          <h2>Portfolio</h2>
+          <p>Selected work and technical projects.</p>
+        </div>
+
+        <!-- Latest Work Highlight -->
+        <div class="glass-panel reveal delay-1" style="margin-bottom: 2rem;">
+          <span class="hero-label" style="font-size: 0.75rem; margin-bottom: 0.5rem;">Latest</span>
+          <h3 style="font-size: 1.25rem; font-family: var(--font-body); margin-bottom: 1rem;">Grata Technologies</h3>
+          <ul class="skill-list" style="margin: 0; display: grid; gap: 0.25rem;">
+            <li>Mobile app features & UI improvements</li>
+            <li>Stability fixes and release support</li>
+            <li>Collaboration with QA/design for polish</li>
+          </ul>
+        </div>
+
+        <div class="projects-grid" id="projects-container">
+          <!-- Projects will be injected here via JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+      <div class="container">
+        <div class="section-header reveal">
+          <h2>Contact</h2>
+          <p>Reach out for opportunities or collaboration.</p>
+        </div>
+        <div class="glass-panel reveal delay-1">
+          <div class="contact-content">
+            <div class="contact-email">
+              <span>Email</span>
+              <a href="mailto:inderpreetbhangu2@gmail.com">inderpreetbhangu2@gmail.com</a>
+            </div>
+            <div class="contact-socials">
+              <a href="mailto:inderpreetbhangu2@gmail.com" class="btn">
+                <i class="ph ph-envelope-simple"></i> Email
+              </a>
+              <a href="https://github.com/IPSBHANGU" target="_blank" rel="noopener noreferrer" class="btn">
+                <i class="ph ph-github-logo"></i> GitHub
+              </a>
+              <a href="https://www.instagram.com/ips_bhangu" target="_blank" rel="noopener noreferrer" class="btn">
+                <i class="ph ph-instagram-logo"></i> Instagram
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; <span id="year"></span> Inderpreet Singh Bhangu. Designed & built with Vanilla HTML/CSS/JS.</p>
+    </div>
+  </footer>
+
+  <!-- Script for Data Binding & Interactivity -->
   <script>
-    const React = window.React;
-    const ReactDOM = window.ReactDOM;
-
-    const {
-      ThemeProvider,
-      createTheme,
-      CssBaseline,
-      AppBar,
-      Toolbar,
-      Typography,
-      Container,
-      Box,
-      Stack,
-      Button,
-      Grid,
-      Card,
-      CardContent,
-      Chip,
-      Divider,
-      Paper,
-      Link,
-    } = window.MaterialUI;
-
-    const PROFILE = {
-      name: "Inderpreet Singh Bhangu",
-      role: "Mobile Developer (Android & iOS)",
-      location: "India",
-      email: "inderpreetbhangu2@gmail.com",
-      github: "https://github.com/IPSBHANGU",
-      instagram: "https://www.instagram.com/ips_bhangu",
-      headline: "I build, on mobile and on the system side.",
-      intro:
-        "I build production-ready mobile apps and low-level Android system solutions—clean UX on the surface, solid engineering underneath.",
-    };
-
-    const LATEST = {
-      company: "Grata Technologies",
-      bullets: [
-        "Mobile app features & UI improvements",
-        "Stability fixes and release support",
-        "Collaboration with QA/design for polish",
-      ],
-    };
-
-    const PROJECTS = [
-      {
-        title: "Android OTA Update System",
-        description:
-          "OTA updater app + backend to deliver builds by device ID for reliable update targeting and version management.",
-        tags: ["Android", "Kotlin", "OTA", "Backend"],
-        links: { repo: "" },
-        screenshot: "assets/ota.png",
-      },
-      {
-        title: "Frontend and Go Backend for Android OTA Project Management",
-        description:
-          "Frontend and Go service for OTA metadata delivery, device targeting, and update distribution APIs.",
-        tags: ["Go", "APIs", "OTA", "Backend"],
-        links: { repo: "" },
-        screenshot: "assets/ota-web.png",
-      },
-      {
-        title: "AOSP Custom ROM Development",
-        description:
-          "Device bring-up work: device trees, HAL integration, kernel-related work, and platform debugging.",
-        tags: ["AOSP", "C/C++", "Linux", "HAL", "Kernel"],
-        links: { repo: "" },
-        screenshot: "assets/aosp.png",
-      },
-      {
-        title: "AR Live Filter App (iOS)",
-        description:
-          "AR-based live filter app with real-time face feature tracking and rendering.",
-        tags: ["iOS", "SwiftUI", "AR"],
-        links: { repo: "" },
-        screenshot: "",
-      },
-      {
-        title: "Sketching App (iOS)",
-        description:
-          "Custom drawing tools and recording of the drawing canvas area only.",
-        tags: ["iOS", "SwiftUI", "Drawing"],
-        links: { repo: "" },
-        screenshot: "",
-      },
-      {
-        title: "Real-time Chat App (iOS)",
-        description:
-          "Realtime chat with groups, media sharing, and user search.",
-        tags: ["iOS", "UIKit", "Firebase", "Realtime DB", "Chat"],
-        links: { repo: "" },
-        screenshot: "",
-      },
-    ];
-
+    // Data
     const SKILL_GROUPS = [
       {
         title: "Mobile",
@@ -404,682 +837,183 @@
       },
     ];
 
-    /* Scroll reveal */
-    function useScrollReveal() {
-      React.useEffect(() => {
-        if (!("IntersectionObserver" in window)) return;
-        const els = Array.from(document.querySelectorAll("[data-reveal='true']"));
-        const io = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((e) => {
-              if (e.isIntersecting) e.target.classList.add("in");
-            });
-          },
-          { threshold: 0.14 }
-        );
-        els.forEach((el) => io.observe(el));
-        return () => io.disconnect();
-      }, []);
-    }
+    const PROJECTS = [
+      {
+        title: "Android OTA Update System",
+        description: "OTA updater app + backend to deliver builds by device ID for reliable update targeting and version management.",
+        tags: ["Android", "Kotlin", "OTA", "Backend"],
+        link: "", /* repo url if exists */
+        screenshot: "assets/ota.webp",
+      },
+      {
+        title: "Frontend and Go Backend for Android OTA Project Management",
+        description: "Frontend and Go service for OTA metadata delivery, device targeting, and update distribution APIs.",
+        tags: ["Go", "APIs", "OTA", "Backend"],
+        link: "",
+        screenshot: "assets/ota-web.webp",
+      },
+      {
+        title: "AOSP Custom ROM Development",
+        description: "Device bring-up work: device trees, HAL integration, kernel-related work, and platform debugging.",
+        tags: ["AOSP", "C/C++", "Linux", "HAL", "Kernel"],
+        link: "",
+        screenshot: "assets/aosp.webp",
+      },
+      {
+        title: "AR Live Filter App (iOS)",
+        description: "AR-based live filter app with real-time face feature tracking and rendering.",
+        tags: ["iOS", "SwiftUI", "AR"],
+        link: "",
+        screenshot: "",
+      },
+      {
+        title: "Sketching App (iOS)",
+        description: "Custom drawing tools and recording of the drawing canvas area only.",
+        tags: ["iOS", "SwiftUI", "Drawing"],
+        link: "",
+        screenshot: "",
+      },
+      {
+        title: "Real-time Chat App (iOS)",
+        description: "Realtime chat with groups, media sharing, and user search.",
+        tags: ["iOS", "UIKit", "Firebase", "Realtime DB", "Chat"],
+        link: "",
+        screenshot: "",
+      }
+    ];
 
-    /* Spotlight follows mouse */
-    (function attachSpotlight() {
-      const el = document.getElementById("spotlight");
-      if (!el) return;
+    // Set Current Year in Footer
+    document.getElementById('year').textContent = new Date().getFullYear();
 
-      const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      if (reduce) return;
+    // Render Skills
+    const skillsContainer = document.getElementById('skills-container');
+    SKILL_GROUPS.forEach((group, index) => {
+      const delayClass = `delay-${(index % 3) + 1}`;
 
-      window.addEventListener(
-        "mousemove",
-        (e) => {
-          const x = (e.clientX / window.innerWidth) * 100;
-          const y = (e.clientY / window.innerHeight) * 100;
-          el.style.setProperty("--mx", x + "%");
-          el.style.setProperty("--my", y + "%");
-        },
-        { passive: true }
-      );
-    })();
+      const listItems = group.bullets.map(b => `<li>${b}</li>`).join('');
+      const chips = group.chips.map(c => `<span class="chip">${c}</span>`).join('');
 
-    /* Follow system theme */
-    function useSystemMode() {
-      const getInitial = () =>
-        window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
-          ? "dark"
-          : "light";
+      skillsContainer.insertAdjacentHTML('beforeend', `
+                <div class="glass-panel reveal ${delayClass}">
+                    <h3 style="font-size: 1.25rem; font-family: var(--font-body); border-bottom: 1px solid var(--panel-border); padding-bottom: 0.75rem;">${group.title}</h3>
+                    <ul class="skill-list">${listItems}</ul>
+                    <div class="skill-chips">${chips}</div>
+                </div>
+            `);
+    });
 
-      const [mode, setMode] = React.useState(getInitial);
+    // Render Projects
+    const projectsContainer = document.getElementById('projects-container');
+    PROJECTS.forEach((project, index) => {
+      const hasImg = project.screenshot && project.screenshot.trim() !== "";
+      const delayClass = `delay-${(index % 2) + 1}`;
 
-      React.useEffect(() => {
-        const mq = window.matchMedia("(prefers-color-scheme: dark)");
-        const handler = (e) => setMode(e.matches ? "dark" : "light");
-        if (mq.addEventListener) mq.addEventListener("change", handler);
-        else mq.addListener(handler);
-        return () => {
-          if (mq.removeEventListener) mq.removeEventListener("change", handler);
-          else mq.removeListener(handler);
-        };
-      }, []);
+      const chips = project.tags.map(t => `<span class="chip">${t}</span>`).join('');
 
-      return mode;
-    }
-
-    /* Typewriter stroke bg (bigger + random positions) */
-    (function startTechWriter() {
-      const host = document.getElementById("techwriter");
-      if (!host) return;
-
-      const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      if (reduce) return;
-
-      const tagWords = Array.from(new Set(PROJECTS.flatMap(p => (p.tags || []))));
-      const preferredOrder = [
-        "Kotlin", "Android", "Go", "SwiftUI", "iOS", "C/C++", "Linux", "AOSP",
-        "Firebase", "React", "Node", "AR", "APIs", "Backend", "OTA", "HAL", "Kernel"
-      ];
-
-      const words = [];
-      preferredOrder.forEach(w => { if (tagWords.includes(w) && !words.includes(w)) words.push(w); });
-      tagWords.forEach(w => { if (!words.includes(w)) words.push(w); });
-      if (!words.length) return;
-
-      let idx = 0;
-      const cycleMs = 3250;
-
-      function randomPosition() {
-        const marginX = 12; // %
-        const marginY = 14; // %
-        const x = marginX + Math.random() * (100 - marginX * 2);
-        const y = marginY + Math.random() * (100 - marginY * 2);
-        return { x, y };
+      let imgHtml = '';
+      if (hasImg) {
+        imgHtml = `
+                    <div class="project-img-wrapper">
+                        <img src="${project.screenshot}" alt="${project.title} screenshot" loading="lazy">
+                    </div>
+                `;
       }
 
-      function render(word) {
-        host.innerHTML = "";
-
-        const svgNS = "http://www.w3.org/2000/svg";
-        const svg = document.createElementNS(svgNS, "svg");
-        svg.setAttribute("viewBox", "0 0 1000 600");
-        svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
-
-        const { x, y } = randomPosition();
-        const rot = (Math.random() * 10 - 5).toFixed(2);
-        const scale = (0.92 + Math.random() * 0.34).toFixed(2);
-        svg.style.left = x + "%";
-        svg.style.top = y + "%";
-        svg.style.transform = `translate(-50%, -50%) rotate(${rot}deg) scale(${scale})`;
-
-        const makeText = (cls) => {
-          const t = document.createElementNS(svgNS, "text");
-          t.setAttribute("x", "500");
-          t.setAttribute("y", "320");
-          t.setAttribute("text-anchor", "middle");
-          t.setAttribute("dominant-baseline", "middle");
-          t.setAttribute("font-family", "Roboto, system-ui, -apple-system, Segoe UI, Arial, sans-serif");
-          t.setAttribute("font-weight", "900");
-          t.setAttribute("font-size", "190"); /* bigger text */
-          t.textContent = word;
-          t.classList.add(cls);
-          return t;
-        };
-
-        const accent = makeText("twTextAccent");
-        const base = makeText("twTextBase");
-
-        svg.appendChild(accent);
-        svg.appendChild(base);
-        host.appendChild(svg);
-
-        const len = base.getComputedTextLength ? base.getComputedTextLength() : 1500;
-        const dash = (len + 30);
-
-        base.style.strokeDasharray = dash;
-        base.style.strokeDashoffset = dash;
-        accent.style.strokeDasharray = dash;
-        accent.style.strokeDashoffset = dash;
-
-        void base.getBBox();
-        base.style.setProperty("--dash", dash);
-        accent.style.setProperty("--dash", dash);
-
-        base.classList.add("run");
-        accent.classList.add("run");
+      let linkHtml = '';
+      if (project.link && project.link.trim() !== "") {
+        linkHtml = `
+                    <div class="project-links">
+                        <a href="${project.link}" target="_blank" rel="noopener noreferrer" style="color: var(--text-primary); font-size: 0.875rem; font-weight: 500; text-decoration: underline; text-underline-offset: 4px;">View Repository &rarr;</a>
+                    </div>
+                `;
       }
 
-      render(words[idx]);
-      setInterval(() => {
-        idx = (idx + 1) % words.length;
-        render(words[idx]);
-      }, cycleMs);
-    })();
+      projectsContainer.insertAdjacentHTML('beforeend', `
+                <div class="glass-panel project-card ${hasImg ? 'has-img' : ''} reveal ${delayClass}">
+                    ${imgHtml}
+                    <div class="project-info">
+                        <h3>${project.title}</h3>
+                        <p>${project.description}</p>
+                        <div class="skill-chips" style="margin-top: 0;">${chips}</div>
+                        ${linkHtml}
+                    </div>
+                </div>
+            `);
+    });
 
-    function NavLink({ href, label, mode }) {
-      const isDark = mode === "dark";
-      return React.createElement(
-        Button,
-        {
-          href,
-          color: "inherit",
-          size: "small",
-          sx: {
-            textTransform: "none",
-            fontWeight: 700,
-            letterSpacing: 0.2,
-            opacity: 0.9,
-            px: 1.2,
-            borderRadius: 999,
-            "&:hover": {
-              opacity: 1,
-              backgroundColor: isDark ? "rgba(255,255,255,0.06)" : "rgba(138,21,56,0.10)",
-            },
-          },
-        },
-        label
-      );
+    // Scroll Reveal Animation (Intersection Observer)
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.15
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+          observer.unobserve(entry.target); // Run once
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.reveal').forEach(el => {
+      observer.observe(el);
+    });
+
+    // Theme Toggle Logic
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeIcon = document.getElementById('theme-icon');
+    const htmlEl = document.documentElement;
+
+    // Initialize theme based on preference
+    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    let currentTheme = prefersDark ? 'dark' : 'light';
+
+    function updateThemeUI(theme) {
+      htmlEl.setAttribute('data-theme', theme);
+      if (theme === 'dark') {
+        themeIcon.classList.replace('ph-moon', 'ph-sun');
+      } else {
+        themeIcon.classList.replace('ph-sun', 'ph-moon');
+      }
     }
 
-    function GlassCard({ children, sx }) {
-      return React.createElement(
-        Paper,
-        {
-          variant: "outlined",
-          sx: {
-            borderRadius: 4,
-            borderColor: "var(--border)",
-            backgroundColor: "var(--panel)",
-            backdropFilter: "blur(10px)",
-            boxShadow: "0 0 0 rgba(0,0,0,0)",
-            transition: "transform 180ms ease, border-color 180ms ease, background-color 180ms ease",
-            "&:hover": {
-              transform: "translateY(-3px)",
-              borderColor: "var(--borderHover)",
-              backgroundColor: "var(--panelHover)",
-            },
-            ...sx,
-          },
-        },
-        children
-      );
-    }
+    updateThemeUI(currentTheme);
 
-    /* ✅ UPDATED: screenshot on LEFT for side-by-side cards */
-    function ProjectCard({ p, mode }) {
-      const isDark = mode === "dark";
-      const hasShot = !!(p.screenshot && String(p.screenshot).trim());
+    themeToggleBtn.addEventListener('click', () => {
+      currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      updateThemeUI(currentTheme);
+    });
 
-      return React.createElement(
-        Card,
-        {
-          variant: "outlined",
-          sx: {
-            height: "100%",
-            borderRadius: 4,
-            borderColor: "var(--border)",
-            backgroundColor: "var(--panel2)",
-            backdropFilter: "blur(10px)",
-            transition: "transform 180ms ease, border-color 180ms ease, background-color 180ms ease",
-            "&:hover": {
-              transform: "translateY(-3px)",
-              borderColor: "var(--borderHover)",
-              backgroundColor: "var(--panelHover)",
-            },
-          }
-        },
-        React.createElement(
-          CardContent,
-          { sx: { p: 2.8 } },
+    // Listen for system theme changes
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+      currentTheme = e.matches ? 'dark' : 'light';
+      updateThemeUI(currentTheme);
+    });
 
-          hasShot
-            ? React.createElement(
-                Grid,
-                { container: true, spacing: 3, alignItems: "center" },
+    // Mobile Menu Toggle Logic
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const navLinksContainer = document.getElementById('nav-links');
+    const navLinksItems = navLinksContainer.querySelectorAll('a');
 
-                /* LEFT: SCREENSHOT */
-                React.createElement(
-                  Grid,
-                  { item: true, xs: 12, md: 6 },
-                  React.createElement(
-                    "div",
-                    { className: "projectShot projectShot--side" },
-                    React.createElement("img", {
-                      src: p.screenshot,
-                      alt: p.title + " screenshot",
-                      loading: "lazy",
-                    })
-                  )
-                ),
+    mobileMenuBtn.addEventListener('click', () => {
+      navLinksContainer.classList.toggle('active');
+      const icon = mobileMenuBtn.querySelector('i');
+      if (navLinksContainer.classList.contains('active')) {
+        icon.classList.replace('ph-list', 'ph-x');
+      } else {
+        icon.classList.replace('ph-x', 'ph-list');
+      }
+    });
 
-                /* RIGHT: TEXT */
-                React.createElement(
-                  Grid,
-                  { item: true, xs: 12, md: 6 },
+    navLinksItems.forEach(link => {
+      link.addEventListener('click', () => {
+        navLinksContainer.classList.remove('active');
+        mobileMenuBtn.querySelector('i').classList.replace('ph-x', 'ph-list');
+      });
+    });
 
-                  React.createElement(Typography, { variant: "h6", fontWeight: 900 }, p.title),
-                  React.createElement(
-                    Typography,
-                    { variant: "body2", color: "text.secondary", sx: { mt: 1.1, lineHeight: 1.7 } },
-                    p.description
-                  ),
-                  React.createElement(
-                    Stack,
-                    { direction: "row", spacing: 1, useFlexGap: true, flexWrap: "wrap", sx: { mt: 2 } },
-                    (p.tags || []).map((t) =>
-                      React.createElement(Chip, {
-                        key: t,
-                        label: t,
-                        size: "small",
-                        variant: "outlined",
-                        sx: {
-                          borderColor: isDark ? "rgba(255,255,255,0.14)" : "rgba(138,21,56,0.25)",
-                          color: "text.primary",
-                          backgroundColor: "transparent"
-                        }
-                      })
-                    )
-                  ),
-                  p.links && p.links.repo
-                    ? React.createElement(
-                        Box,
-                        { sx: { mt: 2 } },
-                        React.createElement(
-                          Link,
-                          { href: p.links.repo, target: "_blank", rel: "noreferrer", underline: "hover" },
-                          "View repository →"
-                        )
-                      )
-                    : null
-                )
-              )
-            : React.createElement(
-                React.Fragment,
-                null,
-                React.createElement(Typography, { variant: "h6", fontWeight: 900 }, p.title),
-                React.createElement(
-                  Typography,
-                  { variant: "body2", color: "text.secondary", sx: { mt: 1.1, lineHeight: 1.7 } },
-                  p.description
-                ),
-                React.createElement(
-                  Stack,
-                  { direction: "row", spacing: 1, useFlexGap: true, flexWrap: "wrap", sx: { mt: 2 } },
-                  (p.tags || []).map((t) =>
-                    React.createElement(Chip, {
-                      key: t,
-                      label: t,
-                      size: "small",
-                      variant: "outlined",
-                      sx: {
-                        borderColor: isDark ? "rgba(255,255,255,0.14)" : "rgba(138,21,56,0.25)",
-                        color: "text.primary",
-                        backgroundColor: "transparent"
-                      }
-                    })
-                  )
-                ),
-                p.links && p.links.repo
-                  ? React.createElement(
-                      Box,
-                      { sx: { mt: 2 } },
-                      React.createElement(
-                        Link,
-                        { href: p.links.repo, target: "_blank", rel: "noreferrer", underline: "hover" },
-                        "View repository →"
-                      )
-                    )
-                  : null
-              )
-        )
-      );
-    }
-
-    function App() {
-      useScrollReveal();
-      const mode = useSystemMode();
-      const isDark = mode === "dark";
-
-      const theme = React.useMemo(() => {
-        return createTheme({
-          palette: {
-            mode,
-            primary: { main: "#8A1538", dark: "#5A0F26", light: "#B21E45" },
-            background: {
-              default: "transparent",
-              paper: isDark ? "rgba(255,255,255,0.04)" : "rgba(255,255,255,0.75)",
-            },
-            text: {
-              primary: isDark ? "#EAF0FF" : "#1b1b1f",
-              secondary: isDark ? "rgba(234,240,255,0.72)" : "rgba(27,27,31,0.72)",
-            },
-          },
-          shape: { borderRadius: 16 },
-          typography: { fontFamily: "Roboto, system-ui, -apple-system, Segoe UI, Arial, sans-serif" },
-        });
-      }, [mode, isDark]);
-
-      return React.createElement(
-        ThemeProvider,
-        { theme },
-        React.createElement(CssBaseline, null),
-
-        React.createElement(
-          AppBar,
-          {
-            position: "sticky",
-            color: "transparent",
-            elevation: 0,
-            sx: {
-              borderBottom: isDark ? "1px solid rgba(255,255,255,0.08)" : "1px solid rgba(138,21,56,0.14)",
-              backdropFilter: "blur(12px)",
-              backgroundColor: isDark ? "rgba(11,15,23,0.55)" : "rgba(255,255,255,0.70)",
-            },
-          },
-          React.createElement(
-            Toolbar,
-            { sx: { justifyContent: "space-between", gap: 2 } },
-            React.createElement(
-              Stack,
-              { spacing: 0, sx: { minWidth: 0 } },
-              React.createElement(Typography, { variant: "subtitle1", fontWeight: 950, noWrap: true }, PROFILE.name),
-              React.createElement(Typography, { variant: "caption", color: "text.secondary", noWrap: true }, PROFILE.role)
-            ),
-            React.createElement(
-              Stack,
-              { direction: "row", spacing: 0.4, alignItems: "center", sx: { flexWrap: "wrap", justifyContent: "flex-end" } },
-              React.createElement(NavLink, { href: "#home", label: "Home", mode }),
-              React.createElement(NavLink, { href: "#about", label: "About", mode }),
-              React.createElement(NavLink, { href: "#skills", label: "Skills", mode }),
-              React.createElement(NavLink, { href: "#projects", label: "Portfolio", mode }),
-              React.createElement(NavLink, { href: "#contact", label: "Contact", mode })
-            )
-          )
-        ),
-
-        React.createElement(
-          Container,
-          { maxWidth: "lg", sx: { py: { xs: 4, md: 7 } } },
-
-          /* HERO */
-          React.createElement(
-            Box,
-            { id: "home", className: "reveal", "data-reveal": "true" },
-            React.createElement(
-              Stack,
-              { spacing: 2.2, sx: { maxWidth: 860 } },
-              React.createElement(Typography, { variant: "overline", color: "text.secondary", sx: { letterSpacing: 1.4 } }, "Mobile • Systems • AOSP"),
-              React.createElement(Typography, { variant: "h3", fontWeight: 950, sx: { letterSpacing: -0.8, lineHeight: 1.06 } }, PROFILE.headline),
-              React.createElement(Typography, { variant: "body1", color: "text.secondary", sx: { lineHeight: 1.85, maxWidth: 740 } }, PROFILE.intro),
-              React.createElement(
-                Stack,
-                { direction: "row", spacing: 1.2, useFlexGap: true, flexWrap: "wrap", sx: { pt: 1 } },
-                ["View portfolio", "GitHub", "Email", "Instagram"].map((label) => {
-                  const href =
-                    label === "View portfolio" ? "#projects" :
-                      label === "GitHub" ? PROFILE.github :
-                        label === "Email" ? "mailto:" + PROFILE.email :
-                          PROFILE.instagram;
-
-                  const isExternal = label === "GitHub" || label === "Instagram";
-
-                  return React.createElement(
-                    Button,
-                    {
-                      key: label,
-                      variant: "outlined",
-                      href,
-                      target: isExternal ? "_blank" : undefined,
-                      rel: isExternal ? "noreferrer" : undefined,
-                      sx: {
-                        textTransform: "none",
-                        fontWeight: 800,
-                        borderRadius: 999,
-                        px: 2.0,
-                        borderColor: isDark ? "rgba(255,255,255,0.18)" : "rgba(138,21,56,0.26)",
-                        color: "text.primary",
-                        "&:hover": {
-                          borderColor: isDark ? "rgba(255,255,255,0.28)" : "rgba(138,21,56,0.40)",
-                          backgroundColor: isDark ? "rgba(255,255,255,0.05)" : "rgba(138,21,56,0.08)",
-                        },
-                      },
-                    },
-                    label
-                  );
-                })
-              )
-            )
-          ),
-
-          /* ABOUT */
-          React.createElement(
-            Box,
-            { id: "about", sx: { mt: { xs: 6, md: 9 } }, className: "reveal", "data-reveal": "true" },
-            React.createElement(
-              Stack,
-              { spacing: 0.6, sx: { mb: 3 } },
-              React.createElement(Typography, { variant: "h5", fontWeight: 900 }, "About"),
-              React.createElement(Typography, { variant: "body2", color: "text.secondary" }, "A bit about what I do and how I work.")
-            ),
-            React.createElement(
-              GlassCard,
-              { sx: { p: { xs: 2.2, md: 3 } } },
-              React.createElement(
-                Stack,
-                { spacing: 1.6 },
-                React.createElement(
-                  Typography,
-                  { variant: "body1", color: "text.secondary", sx: { lineHeight: 1.9 } },
-                  "I’m Inderpreet Singh Bhangu, a software engineer focused on iOS development and low-level Android system engineering. I graduated with a Bachelor’s degree in Computer Science & Engineering from Punjab Technical University in 2024, and I’ve been building production-ready software and open-source systems since my early college years."
-                ),
-                React.createElement(
-                  Typography,
-                  { variant: "body1", color: "text.secondary", sx: { lineHeight: 1.9 } },
-                  "Currently, I work as an Frontend Developer at CoreAI Technologies, where I design and build feature-rich applications using SwiftUI, UIKit, Kotlin, Compose. My work includes working Grata Technologies White-Lable Projects like Arlington, Chard, Frontrow, Ironclad. I also Work on React Frontend Projects"
-                ),
-                React.createElement(
-                  Typography,
-                  { variant: "body1", color: "text.secondary", sx: { lineHeight: 1.9 } },
-                  "Previously, I worked as an iOS Developer at StackGeeks, building apps with SwiftUI, Objective-C, and Firebase—AR live filters (VisionKit), real-time chat, sketching tools, and internal platforms. I care about clean architecture, smooth UX, and scalable code."
-                ),
-                React.createElement(
-                  Typography,
-                  { variant: "body1", color: "text.secondary", sx: { lineHeight: 1.9 } },
-                  "Alongside apps, I’ve been contributing to AOSP / custom ROM development since 2017—kernel/device trees/HALs/Qualcomm platforms, bring-up and debugging across kernel versions from 3.10 to 5.15."
-                )
-              )
-            )
-          ),
-
-          /* SKILLS */
-          React.createElement(
-            Box,
-            { id: "skills", sx: { mt: { xs: 6, md: 9 } }, className: "reveal", "data-reveal": "true" },
-            React.createElement(
-              Stack,
-              { spacing: 0.6, sx: { mb: 3 } },
-              React.createElement(Typography, { variant: "h5", fontWeight: 900 }, "Skills"),
-              React.createElement(Typography, { variant: "body2", color: "text.secondary" }, "Tools and technologies I use regularly.")
-            ),
-            React.createElement(
-              Grid,
-              { container: true, spacing: 2.2 },
-              SKILL_GROUPS.map((g) =>
-                React.createElement(
-                  Grid,
-                  { item: true, xs: 12, md: 4, key: g.title },
-                  React.createElement(
-                    GlassCard,
-                    { sx: { p: 2.4, height: "100%" } },
-                    React.createElement(Typography, { variant: "h6", fontWeight: 950 }, g.title),
-                    React.createElement(Divider, { sx: { my: 1.5, borderColor: isDark ? "rgba(255,255,255,0.10)" : "rgba(138,21,56,0.12)" } }),
-                    React.createElement(
-                      Stack,
-                      { spacing: 0.8 },
-                      g.bullets.map((b) =>
-                        React.createElement(
-                          Typography,
-                          { key: b, variant: "body2", color: "text.secondary", sx: { lineHeight: 1.75 } },
-                          "• " + b
-                        )
-                      )
-                    ),
-                    React.createElement(
-                      Stack,
-                      { direction: "row", spacing: 1, useFlexGap: true, flexWrap: "wrap", sx: { mt: 2 } },
-                      g.chips.map((c) =>
-                        React.createElement(Chip, {
-                          key: c,
-                          label: c,
-                          size: "small",
-                          variant: "outlined",
-                          sx: {
-                            borderColor: isDark ? "rgba(255,255,255,0.14)" : "rgba(138,21,56,0.25)",
-                            color: "text.primary",
-                            backgroundColor: "transparent"
-                          }
-                        })
-                      )
-                    )
-                  )
-                )
-              )
-            )
-          ),
-
-          /* PROJECTS */
-          React.createElement(
-            Box,
-            { id: "projects", sx: { mt: { xs: 6, md: 9 } }, className: "reveal", "data-reveal": "true" },
-            React.createElement(
-              Stack,
-              { spacing: 0.6, sx: { mb: 3 } },
-              React.createElement(Typography, { variant: "h5", fontWeight: 900 }, "Portfolio"),
-              React.createElement(Typography, { variant: "body2", color: "text.secondary" }, "Selected work and technical projects.")
-            ),
-
-            React.createElement(
-              GlassCard,
-              { sx: { p: { xs: 2.2, md: 2.6 }, mb: 2.5 } },
-              React.createElement(Typography, { variant: "subtitle2", color: "text.secondary", sx: { letterSpacing: 0.6 } }, "Latest"),
-              React.createElement(Typography, { variant: "h6", fontWeight: 950, sx: { mt: 0.4 } }, LATEST.company),
-              React.createElement(
-                Stack,
-                { spacing: 0.6, sx: { mt: 1.2 } },
-                LATEST.bullets.map((b) =>
-                  React.createElement(Typography, { key: b, variant: "body2", color: "text.secondary" }, "• " + b)
-                )
-              )
-            ),
-
-            React.createElement(
-              Grid,
-              { container: true, spacing: 2.2 },
-              PROJECTS.map((p) => {
-                const hasShot = !!(p.screenshot && String(p.screenshot).trim());
-                return React.createElement(
-                  Grid,
-                  { item: true, xs: 12, md: hasShot ? 12 : 6, key: p.title },
-                  React.createElement(ProjectCard, { p, mode })
-                );
-              })
-            ),
-
-            React.createElement(
-              Box,
-              { sx: { mt: 2.5 } },
-              React.createElement(
-                Typography,
-                { variant: "body2", color: "text.secondary" },
-                "More on ",
-                React.createElement(
-                  Link,
-                  { href: PROFILE.github, target: "_blank", rel: "noreferrer", underline: "hover", sx: { color: "text.primary", fontWeight: 900 } },
-                  "GitHub"
-                ),
-                "."
-              )
-            )
-          ),
-
-          /* CONTACT */
-          React.createElement(
-            Box,
-            { id: "contact", sx: { mt: { xs: 6, md: 9 } }, className: "reveal", "data-reveal": "true" },
-            React.createElement(
-              Stack,
-              { spacing: 0.6, sx: { mb: 3 } },
-              React.createElement(Typography, { variant: "h5", fontWeight: 900 }, "Contact"),
-              React.createElement(Typography, { variant: "body2", color: "text.secondary" }, "Reach out for opportunities or collaboration.")
-            ),
-            React.createElement(
-              GlassCard,
-              { sx: { p: { xs: 2.2, md: 3 } } },
-              React.createElement(
-                Stack,
-                { direction: { xs: "column", sm: "row" }, spacing: 1.6, alignItems: { sm: "center" }, justifyContent: "space-between" },
-                React.createElement(
-                  Stack,
-                  { spacing: 0.4 },
-                  React.createElement(Typography, { variant: "subtitle2", color: "text.secondary" }, "Email"),
-                  React.createElement(Link, { href: "mailto:" + PROFILE.email, underline: "hover", sx: { fontWeight: 950, color: "text.primary" } }, PROFILE.email)
-                ),
-                React.createElement(
-                  Stack,
-                  { direction: "row", spacing: 1.2, flexWrap: "wrap" },
-                  ["Email", "GitHub", "Instagram"].map((label) => {
-                    const href =
-                      label === "Email" ? "mailto:" + PROFILE.email :
-                        label === "GitHub" ? PROFILE.github :
-                          PROFILE.instagram;
-
-                    const isExternal = label !== "Email";
-
-                    return React.createElement(
-                      Button,
-                      {
-                        key: label,
-                        variant: "outlined",
-                        href,
-                        target: isExternal ? "_blank" : undefined,
-                        rel: isExternal ? "noreferrer" : undefined,
-                        sx: {
-                          textTransform: "none",
-                          fontWeight: 850,
-                          borderRadius: 999,
-                          px: 2.0,
-                          borderColor: isDark ? "rgba(255,255,255,0.18)" : "rgba(138,21,56,0.26)",
-                          color: "text.primary",
-                          "&:hover": {
-                            borderColor: isDark ? "rgba(255,255,255,0.28)" : "rgba(138,21,56,0.40)",
-                            backgroundColor: isDark ? "rgba(255,255,255,0.05)" : "rgba(138,21,56,0.08)"
-                          }
-                        }
-                      },
-                      label
-                    );
-                  })
-                )
-              )
-            )
-          ),
-
-          /* FOOTER */
-          React.createElement(
-            Box,
-            {
-              sx: {
-                mt: 8,
-                pt: 3,
-                borderTop: isDark ? "1px solid rgba(255,255,255,0.08)" : "1px solid rgba(138,21,56,0.14)",
-                color: "text.secondary"
-              }
-            },
-            React.createElement(Typography, { variant: "caption", textAlign: "center", sx: { display: "block" } }, `© ${new Date().getFullYear()} ${PROFILE.name}`)
-          )
-        )
-      );
-    }
-
-    ReactDOM.createRoot(document.getElementById("root")).render(React.createElement(App));
   </script>
 </body>
 
